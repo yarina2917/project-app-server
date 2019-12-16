@@ -1,0 +1,14 @@
+header {
+  padding: 10px;
+  border-bottom: 1px solid darkgray;
+  .menu {
+    display: flex;
+    justify-content: flex-end;
+    button {
+      margin-left: 15px;
+      a {
+        display: block;
+      }
+    }
+  }
+}

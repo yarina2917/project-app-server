@@ -1,0 +1,51 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background: linear-gradient(180deg, rgba(233,234,235,1) 33%, rgba(252,242,252,1) 69%);
+}
+
+a, a:active, a:visited {
+  color: white;
+  text-decoration: none;
+}
+
+.container {
+  padding: 50px;
+}
+
+h1 {
+  text-align: center;
+}
+
+.text-error {
+  margin: 10px 0;
+  font-weight: 500;
+  font-size: 18px;
+  color: darkred;
+  text-align: center;
+}
+
+.form {
+  min-width: 150px;
+  max-width: 300px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.user-roles-buttons {
+  margin-top: 10px;
+  .radio-button {
+    margin-left: 10px;
+  }
+}
+
