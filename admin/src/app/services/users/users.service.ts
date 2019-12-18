@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,10 @@ export class UsersService {
 
   private apiUrl = 'http://localhost:3000/users';
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private cookieService: CookieService
+  ) { }
 
   public get() {
     return this.http.get(`${this.apiUrl}/get`);
@@ -35,15 +39,15 @@ export class UsersService {
   }
 
   public logout(): void {
-    localStorage.removeItem('token');
+    this.cookieService.delete('token');
   }
 
   public getToken(): any {
-    return localStorage.getItem('token');
+    return this.cookieService.get('token');
   }
 
   public setToken(id): void {
-    localStorage.setItem('token', id);
+    this.cookieService.set('token', id);
   }
 
   public loggedIn(): boolean {

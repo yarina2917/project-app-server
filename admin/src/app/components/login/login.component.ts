@@ -32,12 +32,11 @@ export class LoginComponent implements OnInit {
   public login() {
     this.usersService.login(this.form.formGroup.value)
       .subscribe((res: any) => {
-        console.log(res)
-        this.usersService.setToken(res.token);
+        this.usersService.setToken(res.id);
         this.router.navigate(['']);
       }, err => {
         console.log(err)
-        this.loginError = err.error;
+        this.loginError = err.error.message;
       });
   }
 

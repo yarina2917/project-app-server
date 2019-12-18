@@ -39,8 +39,11 @@ export class UserProfileComponent implements OnInit {
   public update() {
     this.usersService.update(this.form.formGroup.value, this.userInfo._id)
       .subscribe(
-        (res: any) => this.updateInfo = res.message,
-        (err) => this.updateInfo = err.status === 401 ? err.error : 'Server error'
+        () => this.updateInfo = 'Information was updated',
+        (err) => {
+          console.log(err)
+          this.updateInfo = err.error.message
+        }
       );
   }
 

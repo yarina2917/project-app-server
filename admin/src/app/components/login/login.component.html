@@ -5,12 +5,10 @@
       <input matInput placeholder="Email" formControlName="email">
     </mat-form-field>
     <mat-form-field class="full-width">
-      <input matInput placeholder="Password" formControlName="password">
+      <input matInput type="password" placeholder="Password" formControlName="password">
     </mat-form-field>
     <p class="text-error">{{loginError}}</p>
     <button type="submit" mat-raised-button color="primary" [disabled]="form.formGroup.invalid">Submit</button>
     <button mat-raised-button color="primary"><a routerLink="/registration">Go to registration</a></button>
   </form>
 </div>
-
-

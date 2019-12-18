@@ -15,7 +15,7 @@ export default class LoginForm {
   public createForm() {
     this.formGroup = this.formBuilder.group({
       email: new FormControl(this.model.email, { validators: [Validators.required, Validators.email]}),
-      password: new FormControl(this.model.password, { validators: [Validators.required]}),
+      password: new FormControl(this.model.password, { validators: [Validators.required, Validators.minLength(5)]}),
     });
   }
 }

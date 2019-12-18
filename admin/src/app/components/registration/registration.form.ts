@@ -17,7 +17,7 @@ export default class RegistrationForm {
       firstName: new FormControl(this.model.firstName, { validators: [Validators.required]}),
       lastName: new FormControl(this.model.lastName, { validators: [Validators.required]}),
       email: new FormControl(this.model.email, { validators: [Validators.required, Validators.email]}),
-      password: new FormControl(this.model.password, { validators: [Validators.required]}),
+      password: new FormControl(this.model.password, { validators: [Validators.required, Validators.minLength(5)]}),
       role: new FormControl(this.model.role, { validators: [Validators.required]}),
     });
   }
