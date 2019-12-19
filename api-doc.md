@@ -36,9 +36,9 @@
    
 *  **Failure Response:**
    
-      **Code:** 
+      **Code:** [number]
       
-      **Content:**
+      **Content:** [string]
       
     
 **Get user**
@@ -70,9 +70,9 @@
    
 *  **Failure Response:**
    
-      **Code:** 
+      **Code:** [number]
       
-      **Content:**  
+      **Content:** [string]
 
 **Create user**
 ----
@@ -115,9 +115,9 @@
    
 *  **Failure Response:**
    
-      **Code: 401** 
+      **Code:** [number]
       
-      **Content:** Email is already used  
+      **Content:** [string] 
    
 **Login user**
 ----
@@ -142,14 +142,41 @@
    
    **Content:** 
    ```json
-        {"_id": "5dfa660287c5ba2d97a86b84"}
+        {"token": "f76640a3-1c4e-4e40-9826-8edef0f21ce2"}
    ```
    
 *  **Failure Response:**
    
-      **Code:**  401
+      **Code:** [number]
       
-      **Content:** Wrong login data        
+      **Content:** [string]   
+      
+**Logout user**
+----
+
+* **URL**
+
+   /users/logout/:id
+   
+* **Method:**
+
+   GET
+
+    
+* **Success Response:**
+
+   **Code:** 200
+   
+   **Content:** 
+   ```json
+        {"message": "Successful logout"}
+   ```
+   
+*  **Failure Response:**
+   
+      **Code:** [number]
+      
+      **Content:** [string]            
 
 **Update user**
 ----
@@ -192,9 +219,9 @@
    
 *  **Failure Response:**
    
-      **Code:** 
+      **Code:** [number]
       
-      **Content:**
+      **Content:** [string]
 
 **Delete user**
 ----
@@ -218,6 +245,6 @@
    
 *  **Failure Response:**
    
-      **Code:** 
+      **Code:** [number]
       
-      **Content:**
+      **Content:** [string]

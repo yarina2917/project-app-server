@@ -1,17 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
+import { RequestsService } from "../requests/requests.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
 
-  private apiUrl = 'http://localhost:3000/users';
+  private apiUrl = 'http://localhost:3100/users';
 
   constructor(
     private http: HttpClient,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private api: RequestsService
   ) { }
 
   public get() {
@@ -38,8 +40,10 @@ export class UsersService {
     return this.http.delete(`${this.apiUrl}/delete/${id}`);
   }
 
-  public logout(): void {
+  public logout(id) {
     this.cookieService.delete('token');
+    console.log(id);
+    return this.http.get(`${this.apiUrl}/logout/${id}`);
   }
 
   public getToken(): any {
@@ -53,4 +57,9 @@ export class UsersService {
   public loggedIn(): boolean {
     return !!this.getToken();
   }
+
+  public authToken(email = 'yana@gmail.com', password = '12345') {
+    return btoa(`${email} ${password}`)
+  }
+
 }

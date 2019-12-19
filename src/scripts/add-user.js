@@ -1,5 +1,5 @@
-const readline = require('readline');
 const mongoose = require('mongoose')
+const readline = require('readline');
 
 const User = require('../models/user').User
 const config = require('../config/config')
@@ -29,27 +29,27 @@ mongoose.connect(config.DB_URL, config.DB_OPTIONS);
 const db = mongoose.connection
 
 db.once('open', () => {
-    const rl = readline.createInterface({
+    const rlStream = readline.createInterface({
         input: process.stdin,
         output: process.stdout,
         prompt: fields[activeField].title
     })
-    rl.prompt()
-    rl.on('line', (line) => {
+    rlStream.prompt()
+    rlStream.on('line', (line) => {
         userData[fields[activeField].prop] = line
         if (activeField + 1 < fields.length) {
-            rl.setPrompt(fields[++activeField].title)
-            rl.prompt()
+            rlStream.setPrompt(fields[++activeField].title)
+            rlStream.prompt()
         } else {
             const user = new User(userData)
             user.save()
                 .then((res) => {
-                    console.log('Success', res)
+                    console.log('Success: ', res)
                     db.close()
                     process.exit(1)
                 })
                 .catch(err => {
-                    console.log('Error', err)
+                    console.log('Error: ', err)
                     db.close()
                     process.exit(1)
                 })

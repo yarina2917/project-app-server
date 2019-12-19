@@ -31,10 +31,8 @@ export class RegistrationComponent implements OnInit {
     this.usersService.create(this.form.formGroup.value)
       .subscribe(
         () => this.router.navigate(['/login']),
-        err => {
-          console.log(err)
-          this.registerError = err.error.message
-        })
+        err => this.registerError = err.error.message
+      )
   }
 
 }

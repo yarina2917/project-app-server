@@ -17,7 +17,8 @@ export class AdminHeaderComponent implements OnInit {
   ngOnInit() {}
 
   public logout() {
-    this.usersService.logout();
+    this.usersService.logout(this.usersService.getToken())
+      .subscribe(res => console.log(res))
     this.router.navigate(['/login']);
   }
 }

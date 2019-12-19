@@ -1,6 +1,7 @@
 class HttpError extends Error {
-    constructor (message = 'Invalid request', status = 400) {
-        super(message)
+    constructor (message, status) {
+        super()
+        this.message = message
         this.status = status
     }
     toJSON () {
@@ -11,4 +12,15 @@ class HttpError extends Error {
     }
 }
 
+const createError = (error) => {
+    let errorMessage = error.message || 'Uncaught exception'
+    let status = error.status || 500
+    if (error.message && error.message.includes('duplicate')) {
+        errorMessage = 'Email is already used'
+        status = 400
+    }
+    return new HttpError(errorMessage, status)
+}
+
+module.exports.createError = createError
 module.exports.HttpError = HttpError

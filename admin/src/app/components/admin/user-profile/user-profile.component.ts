@@ -28,7 +28,6 @@ export class UserProfileComponent implements OnInit {
     this.activatedRoute.params.subscribe(data => {
       this.usersService.getOne(data.id)
         .subscribe(res => {
-          console.log('res', res)
           this.userInfo = res;
           this.model = new RegistrationModel();
           this.form = new RegistrationForm(this.userInfo);
@@ -40,10 +39,7 @@ export class UserProfileComponent implements OnInit {
     this.usersService.update(this.form.formGroup.value, this.userInfo._id)
       .subscribe(
         () => this.updateInfo = 'Information was updated',
-        (err) => {
-          console.log(err)
-          this.updateInfo = err.error.message
-        }
+        (err) => this.updateInfo = err.error.message
       );
   }
 
