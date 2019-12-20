@@ -9,11 +9,10 @@ const config = require('./config/config')
 const users = require('./api-routes/users')
 require('./loaders/datastore')
 
-const adminFilePath = '/admin/dist/admin'
 const path = require('path')
 
 // app.get('/admin', (req, res) => {
-//     res.sendFile(path.join(__dirname + adminFilePath))
+//     res.sendFile(path.join(__dirname, '..', config.adminFilePath))
 // })
 
 app.use(cors())
@@ -22,11 +21,10 @@ app.use(bodyParser.json())
 
 app.use('/users', users)
 
-// catch 404 and forward to error handler
 app.use((req, res, next) => {
     const err = new Error(`Not Found ${req.path}`)
     err.status = 404
-    next(err)
+    next()
 })
 
 app.use(errorHandler)

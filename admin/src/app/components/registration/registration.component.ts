@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { UsersService } from '../../services/users/users.service';
+import { RequestsService } from '../../services/requests/requests.service';
+
 import { RegistrationModel } from './registration.model';
 import { roles } from '../admin/user';
 import RegistrationForm from './registration.form';
@@ -19,7 +22,8 @@ export class RegistrationComponent implements OnInit {
 
   constructor(
     private usersService: UsersService,
-    private router: Router
+    private router: Router,
+    private api: RequestsService
   ) {
     this.model = new RegistrationModel();
     this.form = new RegistrationForm(this.model);
@@ -28,11 +32,11 @@ export class RegistrationComponent implements OnInit {
   ngOnInit() {}
 
   public register() {
-    this.usersService.create(this.form.formGroup.value)
+    this.api.post({url: '/users/create', body: this.form.formGroup.value})
       .subscribe(
         () => this.router.navigate(['/login']),
         err => this.registerError = err.error.message
-      )
+      );
   }
 
 }

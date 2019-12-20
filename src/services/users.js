@@ -1,5 +1,5 @@
-const atob = require('atob');
 const uuidv4 = require('uuid/v4');
+const atob = require('atob')
 
 const User = require('../models/user').User
 const { createError, HttpError } = require('../services/error-handling/http.errors')
@@ -22,12 +22,11 @@ function getUser(id) {
     })
 }
 
-function loginUser(userData, headers) {
-    const data = atob(headers.authorization)
-    // console.log(headers.authorization)
+function loginUser(headers) {
+    const data = atob(headers['authorization'].split(' ')[1]).split(' ')
     return new Promise((resolve, reject) => {
         User
-            .findOneAndUpdate(userData, {apiKey: uuidv4()}, {new: true})
+            .findOneAndUpdate({email: data[0], password: data[1]}, {apiKey: uuidv4()}, {new: true})
             .then(data => {
                 data ? resolve({token: data.apiKey}) :
                     reject(new HttpError('Wrong login data', 401))
@@ -36,10 +35,9 @@ function loginUser(userData, headers) {
     })
 }
 
-function logoutUser (id) {
-    console.log('id', id)
+function logoutUser (headers) {
     return new Promise((resolve, reject) => {
-        User.findOneAndUpdate({ _id: id }, {apiKey: uuidv4()})
+        User.findOneAndUpdate({ apiKey: headers['x-api-key'] }, {apiKey: uuidv4()})
           .then(data => resolve({message: 'Successful logout'}))
           .catch(error => reject(createError(error)))
     })

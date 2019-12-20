@@ -1,10 +1,10 @@
 export class User {
-  public _id: string = '';
-  public firstName: string = '';
-  public lastName: string = '';
-  public email: string = '';
-  public password: string = '';
-  public role: string = '';
+  public _id = '';
+  public firstName = '';
+  public lastName = '';
+  public email = '';
+  public password = '';
+  public role = '';
 }
 
 export const roles = ['Admin', 'User'];

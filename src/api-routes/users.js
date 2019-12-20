@@ -31,15 +31,14 @@ router.post('/create', (req, res, next) => {
         .catch(next)
 })
 
-router.post('/login', (req, res, next) => {
-    loginUser(req.body, req.headers)
+router.get('/login', (req, res, next) => {
+    loginUser(req.headers)
         .then(data => res.status(200).send(data))
         .catch(next)
 })
 
-router.get('/logout/:id', (req, res, next) => {
-    console.log('!!!', req.params.id)
-    logoutUser(req.params.id)
+router.get('/logout', (req, res, next) => {
+    logoutUser(req.headers)
       .then(data => res.status(200).send(data))
       .catch(next)
 })

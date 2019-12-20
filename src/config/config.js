@@ -6,7 +6,8 @@ const config = {
         useUnifiedTopology: true,
         useFindAndModify: false,
         useCreateIndex: true
-    }
+    },
+    adminFilePath: '/admin/dist/admin/index.html'
 }
 
 module.exports = config

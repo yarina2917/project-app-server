@@ -8,7 +8,7 @@ export interface Handlers<TResponseBody> {
 export interface GetOptions<TResponseBody> {
   url: string;
   parameters?: HttpParams;
-  handlers: Handlers<TResponseBody>;
+  handlers?: Handlers<TResponseBody>;
   headers?: HttpHeaders;
 }
 

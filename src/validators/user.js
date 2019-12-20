@@ -21,6 +21,7 @@ const userSchema = {
             type: 'string'
         },
     },
+    required: ['firstName', 'lastName', 'password', 'email', 'role']
 };
 
 module.exports.validateUser = ajv.compile(userSchema)

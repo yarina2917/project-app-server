@@ -15,10 +15,20 @@ export class HeadersInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
+    let headers = {};
+
+    if (request.url.includes('login')) {
+      headers = {
+        Authorization: `Bearer ${this.userService.authToken()}`,
+      };
+    } else if (!request.url.includes('create')) {
+      headers = {
+        'x-api-key': this.userService.getToken(),
+      };
+    }
+
     request = request.clone({
-      setHeaders: {
-        'Authorization': `Bearer ${this.userService.authToken()}`,
-      }
+      setHeaders: headers
     });
 
     return next.handle(request);

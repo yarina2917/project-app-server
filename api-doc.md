@@ -8,6 +8,10 @@
 
    GET
    
+* **Headers**
+    
+    x-api-key: [string]   
+   
 * **Success Response:**
 
    **Code:** 200
@@ -52,6 +56,10 @@
 
    GET
    
+* **Headers**
+    
+    x-api-key: [string]
+         
 * **Success Response:**
 
    **Code:** 200
@@ -128,13 +136,11 @@
    
 * **Method:**
 
-   POST
+   GET
 
-* **Data params**
+* **Headers**
     
-    email = [string]
-    
-    password = [string] 
+    Authorization: [string]
     
 * **Success Response:**
 
@@ -156,13 +162,16 @@
 
 * **URL**
 
-   /users/logout/:id
+   /users/logout
    
 * **Method:**
 
    GET
 
+* **Headers**
     
+    x-api-key: [string]  
+        
 * **Success Response:**
 
    **Code:** 200
@@ -188,7 +197,11 @@
 * **Method:**
 
    PUT
-
+   
+* **Headers**
+    
+    x-api-key: [string]  
+    
 * **Data params**
 
     firstName = [string]
@@ -233,6 +246,10 @@
 * **Method:**
 
    Delete
+
+* **Headers**
+    
+    x-api-key: [string]  
     
 * **Success Response:**
 

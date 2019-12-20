@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { UsersService } from '../../../services/users/users.service';
 import { ActivatedRoute } from '@angular/router';
+
+import { UsersService } from '../../../services/users/users.service';
+import { RequestsService } from '../../../services/requests/requests.service';
+
 import { RegistrationModel } from '../../registration/registration.model';
 import { roles } from '../user';
 import RegistrationForm from '../../registration/registration.form';
@@ -14,19 +17,20 @@ export class UserProfileComponent implements OnInit {
 
   public model: RegistrationModel;
   public form: RegistrationForm;
-  public updateInfo: string = '';
+  public updateInfo = '';
   public userInfo = null;
   public roles = roles;
 
   constructor(
     private usersService: UsersService,
     private activatedRoute: ActivatedRoute,
+    private api: RequestsService
   ) {
   }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(data => {
-      this.usersService.getOne(data.id)
+      this.api.get({url: `/users/get-one/${data.id}`})
         .subscribe(res => {
           this.userInfo = res;
           this.model = new RegistrationModel();
@@ -36,7 +40,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   public update() {
-    this.usersService.update(this.form.formGroup.value, this.userInfo._id)
+    this.api.put({url: `/users/update/${this.userInfo._id}`, body: this.form.formGroup.value})
       .subscribe(
         () => this.updateInfo = 'Information was updated',
         (err) => this.updateInfo = err.error.message
