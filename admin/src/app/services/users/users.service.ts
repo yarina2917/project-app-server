@@ -8,6 +8,10 @@ import { CookieService } from 'ngx-cookie-service';
 export class UsersService {
 
   private userData = {};
+  public access = {
+    admin: false,
+    superAdmin: false
+  }
 
   constructor(
     private http: HttpClient,
@@ -32,6 +36,14 @@ export class UsersService {
 
   public saveLoginData(data) {
     this.userData = {...data};
+    if (this.userData['role']) {
+      this.access.admin = this.userData['role'].toLowerCase().includes('admin');
+      this.access.superAdmin = this.userData['role'] === 'Super admin';
+    }
+  }
+
+  public getLoginData(prop?) {
+    return prop ? this.userData[prop] : this.userData;
   }
 
   public clearLoginData() {

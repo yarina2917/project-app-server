@@ -37,7 +37,8 @@ export class LoginComponent implements OnInit {
     this.usersService.saveLoginData(this.form.formGroup.value);
     this.api.get({url: '/users/login'})
       .subscribe((res: any) => {
-        this.usersService.setToken(res.token);
+        this.usersService.setToken(res.apiKey);
+        this.usersService.saveLoginData({id: res._id, role: res.role});
         this.router.navigate(['']);
       }, err => {
         this.loginError = err.error.message;

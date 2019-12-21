@@ -5,6 +5,7 @@ const cors = require('cors')
 const compression = require('compression')
 
 const errorHandler = require('./services/error-handling/error-handler-middleware')
+const { HttpError } = require('./services/error-handling/http.errors')
 const config = require('./config/config')
 const users = require('./api-routes/users')
 require('./loaders/datastore')
@@ -22,9 +23,7 @@ app.use(bodyParser.json())
 app.use('/users', users)
 
 app.use((req, res, next) => {
-    const err = new Error(`Not Found ${req.path}`)
-    err.status = 404
-    next()
+    next(new HttpError(`Not Found ${req.path}`, 404))
 })
 
 app.use(errorHandler)

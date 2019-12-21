@@ -1,7 +1,7 @@
-<app-admin-header></app-admin-header>
-<div class="container" *ngIf="userInfo">
-  <h1>Profile {{userInfo.firstName}} {{userInfo.lastName}}</h1>
-  <form [formGroup]="form.formGroup" class="form" (ngSubmit)="update()">
+<div class="container" *ngIf="userData">
+  <h1>Profile {{userData.firstName}} {{userData.lastName}}</h1>
+
+  <form [formGroup]="profileForm.formGroup" class="form" (ngSubmit)="updateProfile()">
     <mat-form-field class="full-width">
       <input matInput placeholder="First name" formControlName="firstName">
     </mat-form-field>
@@ -11,18 +11,27 @@
     <mat-form-field class="full-width">
       <input matInput placeholder="Email" formControlName="email">
     </mat-form-field>
+    <mat-form-field>
+      <mat-label>User role</mat-label>
+      <mat-select formControlName="role" [(ngModel)]="roles.default" [disabled]="!usersService.access.superAdmin">
+        <mat-option *ngFor="let role of roles.data" [value]="role">
+          {{role}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <p class="text-error">{{updateInfo.profile}}</p>
+    <button type="submit" mat-raised-button color="primary" [disabled]="profileForm.formGroup.invalid">Update information</button>
+  </form>
+
+  <form [formGroup]="passwordForm.formGroup" class="form" (ngSubmit)="updatePassword()">
     <mat-form-field class="full-width">
       <input matInput type="password" placeholder="Password" formControlName="password">
     </mat-form-field>
-    <div class="user-roles-buttons">
-      <label id="radio-group-label">User role</label>
-      <mat-radio-group aria-labelledby="radio-group-label" formControlName="role">
-        <mat-radio-button class="radio-button" *ngFor="let item of roles" [value]="item">
-          {{item}}
-        </mat-radio-button>
-      </mat-radio-group>
-    </div>
-    <p class="text-error">{{updateInfo}}</p>
-    <button type="submit" mat-raised-button color="primary" [disabled]="form.formGroup.invalid">Submit</button>
+    <mat-form-field class="full-width">
+      <input matInput type="password" placeholder="Confirm password" formControlName="confirmPassword">
+    </mat-form-field>
+    <p class="text-error">{{updateInfo.password}}</p>
+    <button type="submit" mat-raised-button color="primary" [disabled]="passwordForm.formGroup.invalid">Update password</button>
   </form>
+
 </div>

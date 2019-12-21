@@ -29,8 +29,10 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef> Actions </th>
       <td mat-cell *matCellDef="let element">
-        <i class="material-icons" (click)="editUser(element._id)">edit</i>
-        <i class="material-icons" (click)="deleteUser(element._id)">delete</i>
+        <div *ngIf="element.role !== 'Super admin'">
+          <i class="material-icons" (click)="editUser(element._id)">edit</i>
+          <i class="material-icons" (click)="deleteUser(element._id)" *ngIf="element._id !== userId">delete</i>
+        </div>
       </td>
     </ng-container>
 

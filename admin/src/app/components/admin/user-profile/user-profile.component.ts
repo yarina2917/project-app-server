@@ -4,9 +4,11 @@ import { ActivatedRoute } from '@angular/router';
 import { UsersService } from '../../../services/users/users.service';
 import { RequestsService } from '../../../services/requests/requests.service';
 
-import { RegistrationModel } from '../../registration/registration.model';
+import UserProfileForm from './user-profile.form';
+import UserPasswordForm from './user-password.form';
+import { UserPasswordModel } from './user-profile.model';
+
 import { roles } from '../user';
-import RegistrationForm from '../../registration/registration.form';
 
 @Component({
   selector: 'app-user-profile',
@@ -15,35 +17,50 @@ import RegistrationForm from '../../registration/registration.form';
 })
 export class UserProfileComponent implements OnInit {
 
-  public model: RegistrationModel;
-  public form: RegistrationForm;
-  public updateInfo = '';
-  public userInfo = null;
-  public roles = roles;
+  public profileForm: UserProfileForm;
+  public passwordForm: UserPasswordForm;
+  public userData = null;
+  public updateInfo = {
+    profile: '',
+    password: ''
+  };
+  public roles = {
+    data: roles,
+    default: 'User'
+  };
 
   constructor(
     private usersService: UsersService,
     private activatedRoute: ActivatedRoute,
     private api: RequestsService
   ) {
+    this.passwordForm = new UserPasswordForm(new UserPasswordModel());
   }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(data => {
       this.api.get({url: `/users/get-one/${data.id}`})
         .subscribe(res => {
-          this.userInfo = res;
-          this.model = new RegistrationModel();
-          this.form = new RegistrationForm(this.userInfo);
+          this.userData = res;
+          this.profileForm = new UserProfileForm(this.userData);
+          this.roles.default = res.role;
         });
     });
   }
 
-  public update() {
-    this.api.put({url: `/users/update/${this.userInfo._id}`, body: this.form.formGroup.value})
+  public updateProfile() {
+    this.api.put({url: `/users/update/${this.userData._id}`, body: this.profileForm.formGroup.value})
       .subscribe(
-        () => this.updateInfo = 'Information was updated',
-        (err) => this.updateInfo = err.error.message
+        () => this.updateInfo.profile = 'Information was updated',
+        (err) => this.updateInfo.profile = err.error.message
+      );
+  }
+
+  public updatePassword() {
+    this.api.put({url: `/users/update-password/${this.userData._id}`, body: {password: this.passwordForm.formGroup.value.password}})
+      .subscribe(
+        () => this.updateInfo.password = 'Password was updated',
+        (err) => this.updateInfo.password = err.error.message
       );
   }
 

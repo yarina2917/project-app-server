@@ -15,6 +15,7 @@ export class UsersListComponent implements OnInit {
 
   public displayedColumns: string[] = ['firstName', 'lastName', 'email', 'role', 'actions'];
   public usersData: User[] = [];
+  private userId;
 
   constructor(
     private usersService: UsersService,
@@ -25,6 +26,7 @@ export class UsersListComponent implements OnInit {
   ngOnInit(): void {
     this.api.get({url: '/users/get'})
       .subscribe((res: User[]) => this.usersData = res);
+    this.userId = this.usersService.getLoginData('id');
   }
 
   public editUser(id): void {

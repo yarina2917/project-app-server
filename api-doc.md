@@ -24,7 +24,6 @@
                 "firstName": "Yana",
                 "lastName": "Yana",
                 "email": "yana@gmail.com",
-                "password": "12345",
                 "role": "Admin"
             },
             {
@@ -32,7 +31,6 @@
                 "firstName": "Yana",
                 "lastName": "Yana",
                 "email": "yana@gmail.com",
-                "password": "12345",
                 "role": "User"
             }
         ]
@@ -71,7 +69,6 @@
             "firstName": "Yana",
             "lastName": "Yana",
             "email": "yana@gmail.com",
-            "password": "12345",
             "role": "Admin"
         }
    ```
@@ -148,7 +145,15 @@
    
    **Content:** 
    ```json
-        {"token": "f76640a3-1c4e-4e40-9826-8edef0f21ce2"}
+       {
+           "apiKey": "9ca188ff-1285-451c-ac98-9f00a136aae4",
+           "_id": "5dfa660287c5ba2d97a86b84",
+           "firstName": "Yana",
+           "lastName": "Yana",
+           "email": "yana@gmail.com",
+           "password": "12345",
+           "role": "Admin"
+       }
    ```
    
 *  **Failure Response:**

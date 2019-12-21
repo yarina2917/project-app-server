@@ -13,14 +13,6 @@
     <mat-form-field class="full-width">
       <input matInput type="password" placeholder="Password" formControlName="password">
     </mat-form-field>
-    <div class="user-roles-buttons">
-      <label id="radio-group-label">User role</label>
-      <mat-radio-group aria-labelledby="radio-group-label" formControlName="role">
-        <mat-radio-button class="radio-button" *ngFor="let item of roles" [value]="item">
-          {{item}}
-        </mat-radio-button>
-      </mat-radio-group>
-    </div>
     <p class="text-error">{{registerError}}</p>
     <button type="submit" mat-raised-button color="primary" [disabled]="form.formGroup.invalid">Submit</button>
     <button mat-raised-button color="primary"><a routerLink="/login">Go to login</a></button>

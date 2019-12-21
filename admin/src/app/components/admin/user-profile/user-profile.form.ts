@@ -1,12 +1,12 @@
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { RegistrationModel } from './registration.model';
+import { UserProfileModel } from "./user-profile.model";
 
-export default class RegistrationForm {
+export default class UserProfileForm {
   private formBuilder: FormBuilder;
   public formGroup: FormGroup;
-  public model: RegistrationModel;
+  public model: UserProfileModel;
 
-  constructor(model: RegistrationModel) {
+  constructor(model: UserProfileModel) {
     this.formBuilder = new FormBuilder();
     this.model = model;
     this.createForm();
@@ -17,7 +17,7 @@ export default class RegistrationForm {
       firstName: new FormControl(this.model.firstName, { validators: [Validators.required]}),
       lastName: new FormControl(this.model.lastName, { validators: [Validators.required]}),
       email: new FormControl(this.model.email, { validators: [Validators.required, Validators.email]}),
-      password: new FormControl(this.model.password, { validators: [Validators.required, Validators.minLength(5)]})
+      role: new FormControl(this.model.lastName, { validators: [Validators.required]})
     });
   }
 }

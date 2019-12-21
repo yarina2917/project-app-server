@@ -18,6 +18,9 @@ export class AuthenticationGuard implements CanActivate {
       this.router.navigate(['/login']);
       return false;
     }
+    if (state.url === '/users' && !this.usersService.access.admin) {
+      return false;
+    }
     return true;
   }
 }

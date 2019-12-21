@@ -16,6 +16,7 @@ const createError = (error) => {
     let errorMessage = error.message || 'Uncaught exception'
     let status = error.status || 500
     if (error.message && error.message.includes('duplicate')) {
+        console.log(error.message)
         errorMessage = 'Email is already used'
         status = 400
     }
