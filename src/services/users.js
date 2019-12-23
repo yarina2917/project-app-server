@@ -5,13 +5,14 @@ const pick = require('lodash/pick')
 const User = require('../models/user').User
 const { createError, HttpError } = require('../services/error-handling/http.errors')
 
-const userFields = ['firstName', 'lastName', 'email', 'role', '_id']
+const usersFields = ['firstName', 'lastName', 'email', 'role', '_id']
+const userFields = ['firstName', 'lastName', 'email', 'password', 'role', '_id']
 
 function getUsers() {
     return new Promise((resolve, reject) => {
         User
             .find()
-            .then(data => resolve(data.map(user => pick(user, userFields))))
+            .then(data => resolve(data.map(user => pick(user, usersFields))))
             .catch(error => reject(createError(error)))
     })
 }
@@ -34,11 +35,10 @@ function getUserByToken(headers) {
     })
 }
 
-function loginUser(headers) {
-    const data = atob(headers['authorization'].split(' ')[1]).split(' ')
+function loginUser(userData) {
     return new Promise((resolve, reject) => {
         User
-            .findOneAndUpdate({email: data[0], password: data[1]}, {apiKey: uuidv4()}, {new: true})
+            .findOneAndUpdate({email: userData.email}, {apiKey: uuidv4()}, {new: true})
             .then(data => {
                 data ? resolve(data): reject(new HttpError('Incorrect login data', 401))
             })
@@ -71,14 +71,6 @@ function updateUser(id, userData) {
     })
 }
 
-function updateUserPassword (id, userData) {
-    return new Promise((resolve, reject) => {
-        User.findOneAndUpdate({ _id: id }, userData)
-          .then(data => resolve({message: 'Password was updated'}))
-          .catch(error => reject(createError(error)))
-    })
-}
-
 function deleteUser(id) {
     return new Promise((resolve, reject) => {
         User.findOneAndRemove({_id: id})
@@ -94,5 +86,4 @@ module.exports.createUser = createUser
 module.exports.loginUser = loginUser
 module.exports.logoutUser = logoutUser
 module.exports.updateUser = updateUser
-module.exports.updateUserPassword = updateUserPassword
 module.exports.deleteUser = deleteUser

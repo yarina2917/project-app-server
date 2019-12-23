@@ -29,7 +29,7 @@ export class AppComponent implements OnInit {
     if (this.userService.loggedIn()) {
       this.api.get({url: '/users/get-one'})
         .subscribe((res) => {
-          this.userService.saveLoginData({id: res._id, role: res.role})
+          this.userService.saveUserData({id: res._id, role: res.role})
         })
     }
   }

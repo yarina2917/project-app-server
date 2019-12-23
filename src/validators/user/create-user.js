@@ -1,4 +1,4 @@
-const ajv = require('ajv')();
+const ajv = require('ajv/lib/ajv')();
 
 const userSchema = {
     type: 'object',
@@ -14,13 +14,9 @@ const userSchema = {
         },
         password: {
             type: 'string'
-        },
-        role: {
-            type: 'string',
         }
     },
-    required: ['firstName', 'lastName', 'email'],
-    additionalProperties: true
+    required: ['firstName', 'lastName', 'email', 'password']
 };
 
-module.exports.validateUser = ajv.compile(userSchema)
+module.exports = ajv.compile(userSchema)

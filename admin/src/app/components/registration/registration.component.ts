@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { UsersService } from '../../services/users/users.service';
 import { RequestsService } from '../../services/requests/requests.service';
+import { EncryptDecryptService } from "../../services/encrypt-decrypt.service";
 
 import { RegistrationModel } from './registration.model';
-import { roles } from '../admin/user';
 import RegistrationForm from './registration.form';
 
 @Component({
@@ -17,13 +16,12 @@ export class RegistrationComponent implements OnInit {
 
   public model: RegistrationModel;
   public form: RegistrationForm;
-  public roles = roles;
   public registerError = '';
 
   constructor(
-    private usersService: UsersService,
     private router: Router,
-    private api: RequestsService
+    private api: RequestsService,
+    private encryptDecryptService: EncryptDecryptService
   ) {
     this.model = new RegistrationModel();
     this.form = new RegistrationForm(this.model);
@@ -32,11 +30,24 @@ export class RegistrationComponent implements OnInit {
   ngOnInit() {}
 
   public register() {
-    this.api.post({url: '/users/create', body: this.form.formGroup.value})
-      .subscribe(
-        () => this.router.navigate(['/login']),
-        err => this.registerError = err.error.message
-      );
+    if (this.model.password !== this.model.confirmPassword) {
+      this.registerError = 'Passwords are not equal';
+    } else {
+      this.api.post({url: '/users/create', body: this.getUserData()})
+        .subscribe(
+          res => this.router.navigate(['/login']),
+          err => this.registerError = err.error.message
+        );
+    }
+  }
+
+  public getUserData() {
+    return {
+      firstName: this.model.firstName,
+      lastName: this.model.lastName,
+      email: this.model.email,
+      password: this.encryptDecryptService.encrypt(this.model.password)
+    }
   }
 
 }

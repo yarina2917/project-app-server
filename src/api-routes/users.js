@@ -9,11 +9,11 @@ const {
     loginUser,
     logoutUser,
     updateUser,
-    updateUserPassword,
     deleteUser
 } = require('../services/users')
-const { validateUser } = require('../validators/user')
+const validator = require('../validators/validator')
 const { validate } = require('../services/error-handling/validate-middleware')
+const authentication = require('../services/passport/passport-middleware')
 
 router.get('/get', (req, res, next) => {
     getUsers()
@@ -33,16 +33,18 @@ router.get('/get-one', (req, res, next) => {
       .catch(next)
 })
 
-router.post('/create', validate(validateUser), (req, res, next) => {
+router.post('/create', validate(validator.createUser), (req, res, next) => {
     createUser(req.body)
         .then(data => res.status(200).send(data))
         .catch(next)
 })
 
-router.get('/login', (req, res, next) => {
-    loginUser(req.headers)
-        .then(data => res.status(200).send(data))
-        .catch(next)
+router.post('/login', authentication, (req, res, next) => {
+    loginUser(req.body)
+        .then(data => {
+            res.status(200).send(data)
+        })
+        .catch((err) => console.log('error', err))
 })
 
 router.get('/logout', (req, res, next) => {
@@ -51,16 +53,10 @@ router.get('/logout', (req, res, next) => {
       .catch(next)
 })
 
-router.put('/update/:id', validate(validateUser), (req, res, next) => {
+router.put('/update/:id', validate(validator.updateUser), (req, res, next) => {
     updateUser(req.params.id, req.body)
         .then(data => res.status(200).send(data))
         .catch(next)
-})
-
-router.put('/update-password/:id', (req, res, next) => {
-    updateUserPassword(req.params.id, req.body)
-      .then(data => res.status(200).send(data))
-      .catch(next)
 })
 
 router.delete('/delete/:id', (req, res, next) => {

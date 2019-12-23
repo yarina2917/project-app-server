@@ -133,11 +133,13 @@
    
 * **Method:**
 
-   GET
+   POST
 
-* **Headers**
+* **Data params**
     
-    Authorization: [string]
+    email = [string]
+    
+    password = [string] 
     
 * **Success Response:**
 

@@ -13,6 +13,9 @@
     <mat-form-field class="full-width">
       <input matInput type="password" placeholder="Password" formControlName="password">
     </mat-form-field>
+    <mat-form-field class="full-width">
+      <input matInput type="password" placeholder="Confirm password" formControlName="confirmPassword">
+    </mat-form-field>
     <p class="text-error">{{registerError}}</p>
     <button type="submit" mat-raised-button color="primary" [disabled]="form.formGroup.invalid">Submit</button>
     <button mat-raised-button color="primary"><a routerLink="/login">Go to login</a></button>

@@ -1,14 +1,17 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 
-const { User } = require('../../models/user').User
+const CryptoJS = require('crypto-js')
+
+const User = require('../../models/user').User
 
 passport.use('local', new LocalStrategy({
-  emailField: 'email',
+  usernameField: 'email',
   passwordField: 'password'
 }, (email, password, done) => {
   User.findOne({ email: email, password: password })
     .then((user) => {
+      console.log(user)
       if (!user) {
         return done(null, false, { message: 'Incorrect login data' });
       }

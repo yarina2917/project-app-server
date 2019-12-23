@@ -8,10 +8,7 @@ import { CookieService } from 'ngx-cookie-service';
 export class UsersService {
 
   private userData = {};
-  public access = {
-    admin: false,
-    superAdmin: false
-  }
+  public adminAccess = false;
 
   constructor(
     private http: HttpClient,
@@ -30,19 +27,12 @@ export class UsersService {
     return !!this.getToken();
   }
 
-  public authToken() {
-    return btoa(`${this.userData['email']} ${this.userData['password']}`);
-  }
-
-  public saveLoginData(data) {
+  public saveUserData(data) {
     this.userData = {...data};
-    if (this.userData['role']) {
-      this.access.admin = this.userData['role'].toLowerCase().includes('admin');
-      this.access.superAdmin = this.userData['role'] === 'Super admin';
-    }
+    this.adminAccess = this.userData['role'] === 'Admin';
   }
 
-  public getLoginData(prop?) {
+  public getUserData(prop?) {
     return prop ? this.userData[prop] : this.userData;
   }
 

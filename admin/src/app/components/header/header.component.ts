@@ -20,7 +20,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {}
 
   public profile() {
-    this.router.navigate([`/user/${this.usersService.getLoginData('id')}`]);
+    this.router.navigate([`/user/${this.usersService.getUserData('id')}`]);
   }
 
   public logout() {
