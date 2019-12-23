@@ -1,18 +1,16 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 
-const CryptoJS = require('crypto-js')
-
 const User = require('../../models/user').User
+const { decrypt } = require('../../services/users')
 
 passport.use('local', new LocalStrategy({
   usernameField: 'email',
   passwordField: 'password'
 }, (email, password, done) => {
-  User.findOne({ email: email, password: password })
+  User.findOne({ email: email })
     .then((user) => {
-      console.log(user)
-      if (!user) {
+      if (!user || decrypt(user.password) !== decrypt(password)) {
         return done(null, false, { message: 'Incorrect login data' });
       }
       return done(null, user);

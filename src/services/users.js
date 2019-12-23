@@ -1,6 +1,6 @@
-const uuidv4 = require('uuid/v4');
-const atob = require('atob')
+const uuidv4 = require('uuid/v4')
 const pick = require('lodash/pick')
+const CryptoJS = require('crypto-js')
 
 const User = require('../models/user').User
 const { createError, HttpError } = require('../services/error-handling/http.errors')
@@ -79,6 +79,14 @@ function deleteUser(id) {
     })
 }
 
+function encrypt(value) {
+    return CryptoJS.AES.encrypt(value, 'Some key 12345').toString();
+}
+
+function decrypt(textToDecrypt) {
+    return CryptoJS.AES.decrypt(textToDecrypt, 'Some key 12345').toString(CryptoJS.enc.Utf8);
+}
+
 module.exports.getUsers = getUsers
 module.exports.getUser = getUser
 module.exports.getUserByToken = getUserByToken
@@ -87,3 +95,5 @@ module.exports.loginUser = loginUser
 module.exports.logoutUser = logoutUser
 module.exports.updateUser = updateUser
 module.exports.deleteUser = deleteUser
+module.exports.encrypt = encrypt
+module.exports.decrypt = decrypt

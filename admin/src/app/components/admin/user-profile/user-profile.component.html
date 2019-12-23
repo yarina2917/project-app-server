@@ -1,5 +1,5 @@
 <div class="container" *ngIf="form">
-  <h1>Profile {{model.firstName}} {{model.lastName}}</h1>
+  <h1>Profile {{userData.firstName}} {{userData.lastName}}</h1>
 
   <form [formGroup]="form.formGroup" class="form" (ngSubmit)="update()">
     <mat-form-field class="full-width">

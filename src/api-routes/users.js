@@ -9,7 +9,7 @@ const {
     loginUser,
     logoutUser,
     updateUser,
-    deleteUser
+    deleteUser,
 } = require('../services/users')
 const validator = require('../validators/validator')
 const { validate } = require('../services/error-handling/validate-middleware')
