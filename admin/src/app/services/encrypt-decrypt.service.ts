@@ -1,20 +1,19 @@
 import { Injectable } from '@angular/core';
 import * as CryptoJS from 'crypto-js';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EncryptDecryptService {
 
-  private secretKey = 'Some key 12345';
-
   constructor() { }
 
-  encrypt(value : string) : string {
-    return CryptoJS.AES.encrypt(value, this.secretKey.trim()).toString();
+  public encrypt(value: string): string {
+    return CryptoJS.AES.encrypt(value, environment.secretKey.trim()).toString();
   }
 
-  decrypt(textToDecrypt : string) {
-    return CryptoJS.AES.decrypt(textToDecrypt, this.secretKey.trim()).toString(CryptoJS.enc.Utf8);
+  public decrypt(textToDecrypt: string): string {
+    return CryptoJS.AES.decrypt(textToDecrypt, environment.secretKey.trim()).toString(CryptoJS.enc.Utf8);
   }
 }

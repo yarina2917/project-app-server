@@ -8,5 +8,5 @@ module.exports = (error, req, res, next) => {
             message: error.message
         })
     }
-    res.status(error.status || 500).json({ message: error.message || 'uncaught exception'})
+    res.status(error.status || 500).json({ message: error.message || 'Uncaught Exception'})
 }

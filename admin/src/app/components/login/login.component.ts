@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { UsersService } from '../../services/users/users.service';
 import { RequestsService } from '../../services/requests/requests.service';
-import { EncryptDecryptService } from "../../services/encrypt-decrypt.service";
+import { EncryptDecryptService } from '../../services/encrypt-decrypt.service';
 
 import { LoginModel } from './login.model';
 import LoginForm from './login.form';
@@ -29,26 +29,29 @@ export class LoginComponent implements OnInit {
     this.form = new LoginForm(this.model);
   }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     if (this.usersService.loggedIn()) {
       this.router.navigate(['']);
     }
   }
 
-  public login() {
+  public login(): void {
     this.api.post({url: '/users/login', body: this.getUserData()})
-      .subscribe((res: any) => {
-        this.usersService.setToken(res.apiKey);
-        this.usersService.saveUserData({id: res._id, role: res.role});
-        this.router.navigate(['']);
-      }, err => this.loginError = err.error.message);
+      .subscribe(
+        (res: any) => {
+          this.usersService.setToken(res.apiKey);
+          this.usersService.saveUserData({id: res._id, role: res.role});
+          this.router.navigate(['']);
+        },
+        err => this.loginError = err.error.message
+      );
   }
 
-  public getUserData() {
+  public getUserData(): any {
     return {
       email: this.model.email,
       password: this.encryptDecryptService.encrypt(this.model.password)
-    }
+    };
   }
 
 }

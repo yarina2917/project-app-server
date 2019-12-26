@@ -14,9 +14,6 @@
     <mat-form-field class="full-width">
       <input matInput type="password" placeholder="Password" formControlName="password">
     </mat-form-field>
-    <mat-form-field class="full-width">
-      <input matInput type="password" placeholder="Confirm password" formControlName="confirmPassword">
-    </mat-form-field>
     <mat-form-field>
       <mat-label>User role</mat-label>
       <mat-select formControlName="role" [(ngModel)]="model.role" [disabled]="!usersService.adminAccess">
@@ -25,7 +22,6 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <p class="text-error">{{updateInfo}}</p>
     <button type="submit" mat-raised-button color="primary" [disabled]="form.formGroup.invalid">Update information</button>
   </form>
 

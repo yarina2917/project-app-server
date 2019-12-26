@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const uuidv4 = require('uuid/v4');
+const mongoose = require('mongoose')
+const uuidv4 = require('uuid/v4')
 
 const userSchema = new mongoose.Schema({
     firstName: {
@@ -26,11 +26,11 @@ const userSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        default: 'User',
+        default: 'USER',
         required: true,
-    },
-});
+    }
+})
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema)
 
-module.exports.User = User;
+module.exports.User = User

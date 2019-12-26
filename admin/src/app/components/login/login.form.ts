@@ -21,7 +21,7 @@ export default class LoginForm {
     this.formGroup.valueChanges.subscribe((data: any) => {
       this.model.email = data.email;
       this.model.password = data.password;
-    })
+    });
   }
 
   public getControl(name: string) {
@@ -30,7 +30,7 @@ export default class LoginForm {
 
   public patchForm(data: any): void {
       this.formGroup.patchValue(data);
-    Object.keys(data).forEach(field => {
+      Object.keys(data).forEach(field => {
       this.model[field] = data[field];
     });
   }

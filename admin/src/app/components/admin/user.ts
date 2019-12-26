@@ -7,4 +7,4 @@ export class User {
   public role = '';
 }
 
-export const roles = ['Admin', 'User'];
+export const roles = ['ADMIN', 'USER'];

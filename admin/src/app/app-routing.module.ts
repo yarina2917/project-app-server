@@ -6,16 +6,17 @@ import { AdminComponent } from './components/admin/admin.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { LoginComponent } from './components/login/login.component';
 import { AuthenticationGuard } from './guards/authentication-guard';
-import { GraphicsComponent } from "./components/pages/graphics/graphics.component";
-import { HomeComponent } from "./components/pages/home/home.component";
+import { GraphicsComponent } from './components/graphics/graphics.component';
+import { HomeComponent } from './components/home/home.component';
 
 const routes: Routes = [
   {path: 'registration', component: RegistrationComponent},
   {path: 'login', component: LoginComponent},
-  {path: '', component: HomeComponent, canActivate: [AuthenticationGuard]},
   {path: 'users', component: AdminComponent, canActivate: [AuthenticationGuard]},
   {path: 'user/:id', component: UserProfileComponent, canActivate: [AuthenticationGuard]},
+  {path: 'profile', component: UserProfileComponent, canActivate: [AuthenticationGuard]},
   {path: 'graphics', component: GraphicsComponent, canActivate: [AuthenticationGuard]},
+  {path: '', component: HomeComponent, canActivate: [AuthenticationGuard]},
   {path: '**', component: HomeComponent}
 ];
 

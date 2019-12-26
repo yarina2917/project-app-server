@@ -1,5 +1,5 @@
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { UserProfileModel } from "./user-profile.model";
+import { UserProfileModel } from './user-profile.model';
 
 export default class UserProfileForm {
   private formBuilder: FormBuilder;
@@ -18,7 +18,6 @@ export default class UserProfileForm {
       lastName: new FormControl(this.model.lastName, { validators: [Validators.required]}),
       email: new FormControl(this.model.email, { validators: [Validators.required, Validators.email]}),
       password: new FormControl(this.model.password, { validators: [Validators.required, Validators.required, Validators.minLength(5)]}),
-      confirmPassword: new FormControl(this.model.confirmPassword, { validators: [Validators.required, Validators.minLength(5)]}),
       role: new FormControl(this.model.lastName, { validators: [Validators.required]})
     });
 
@@ -27,12 +26,11 @@ export default class UserProfileForm {
       this.model.lastName = data.lastName;
       this.model.email = data.email;
       this.model.password = data.password;
-      this.model.confirmPassword = data.confirmPassword;
       this.model.role = data.role;
     });
   }
 
-  public getControl (name: string) {
+  public getControl(name: string) {
     return this.formGroup.get(name);
   }
 

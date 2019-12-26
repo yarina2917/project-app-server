@@ -1,4 +1,4 @@
-const ajv = require('ajv/lib/ajv')();
+const ajv = require('ajv/lib/ajv')()
 
 const userSchema = {
   type: 'object',
@@ -20,6 +20,6 @@ const userSchema = {
       type: 'string'
     }
   }
-};
+}
 
 module.exports = ajv.compile(userSchema)

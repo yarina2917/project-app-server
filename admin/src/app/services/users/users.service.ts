@@ -27,12 +27,12 @@ export class UsersService {
     return !!this.getToken();
   }
 
-  public saveUserData(data) {
+  public saveUserData(data): void {
     this.userData = {...data};
-    this.adminAccess = this.userData['role'] === 'Admin';
+    this.adminAccess = this.userData['role'] === 'ADMIN';
   }
 
-  public getUserData(prop?) {
+  public getUserData(prop?): any {
     return prop ? this.userData[prop] : this.userData;
   }
 

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 
 import { RequestsService } from './services/requests/requests.service';
-import { UsersService } from "./services/users/users.service";
+import { UsersService } from './services/users/users.service';
 
 @Component({
   selector: 'app-root',
@@ -29,8 +29,8 @@ export class AppComponent implements OnInit {
     if (this.userService.loggedIn()) {
       this.api.get({url: '/users/get-one'})
         .subscribe((res) => {
-          this.userService.saveUserData({id: res._id, role: res.role})
-        })
+          this.userService.saveUserData({id: res._id, role: res.role});
+        });
     }
   }
 

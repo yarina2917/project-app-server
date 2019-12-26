@@ -22,16 +22,16 @@ export class UsersListComponent implements OnInit {
     private api: RequestsService
   ) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.api.get({url: '/users/get'})
       .subscribe((res: User[]) => this.usersData = res);
   }
 
-  public editUser(id): void {
+  public editUser(id: string): void {
     this.router.navigate([`user/${id}`]);
   }
 
-  public deleteUser(id): void {
+  public deleteUser(id: string): void {
     this.api.delete({url: `/users/delete/${id}`})
       .subscribe(() => this.usersData = this.usersData.filter(user => user._id !== id));
   }

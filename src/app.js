@@ -3,6 +3,7 @@ const app = express()
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const compression = require('compression')
+require('dotenv').config()
 
 const errorHandler = require('./services/error-handling/error-handler-middleware')
 const { HttpError } = require('./services/error-handling/http.errors')
@@ -28,6 +29,6 @@ app.use((req, res, next) => {
 
 app.use(errorHandler)
 
-app.listen(process.env.PORT || config.PORT, () => {
-    console.log(`Server works on port ${process.env.PORT || config.PORT}`)
+app.listen(config.port, () => {
+    console.log(`Server works on port ${config.port}`)
 })

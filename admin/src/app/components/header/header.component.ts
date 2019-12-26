@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
 
-import { UsersService } from "../../services/users/users.service";
-import { RequestsService } from "../../services/requests/requests.service";
+import { UsersService } from '../../services/users/users.service';
+import { RequestsService } from '../../services/requests/requests.service';
 
 @Component({
   selector: 'app-header',
@@ -17,13 +17,9 @@ export class HeaderComponent implements OnInit {
     private api: RequestsService
   ) { }
 
-  ngOnInit() {}
+  public ngOnInit() {}
 
-  public profile() {
-    this.router.navigate([`/user/${this.usersService.getUserData('id')}`]);
-  }
-
-  public logout() {
+  public logout(): void {
     this.api.get({url: '/users/logout'})
       .subscribe(() => {
         this.usersService.clearLoginData();

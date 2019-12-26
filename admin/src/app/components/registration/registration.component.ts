@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { RequestsService } from '../../services/requests/requests.service';
-import { EncryptDecryptService } from "../../services/encrypt-decrypt.service";
+import { EncryptDecryptService } from '../../services/encrypt-decrypt.service';
 
 import { RegistrationModel } from './registration.model';
 import RegistrationForm from './registration.form';
@@ -27,9 +27,9 @@ export class RegistrationComponent implements OnInit {
     this.form = new RegistrationForm(this.model);
   }
 
-  ngOnInit() {}
+  public ngOnInit() {}
 
-  public register() {
+  public register(): void {
     if (this.model.password !== this.model.confirmPassword) {
       this.registerError = 'Passwords are not equal';
     } else {
@@ -41,13 +41,13 @@ export class RegistrationComponent implements OnInit {
     }
   }
 
-  public getUserData() {
+  public getUserData(): any {
     return {
       firstName: this.model.firstName,
       lastName: this.model.lastName,
       email: this.model.email,
       password: this.encryptDecryptService.encrypt(this.model.password)
-    }
+    };
   }
 
 }
