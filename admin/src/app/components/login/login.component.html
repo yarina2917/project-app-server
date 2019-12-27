@@ -3,9 +3,18 @@
   <form [formGroup]="form.formGroup" class="form" (ngSubmit)="login()">
     <mat-form-field class="full-width">
       <input matInput placeholder="Email" formControlName="email">
+      <mat-error *ngIf="form.getControl('email').hasError('email') && !form.getControl('email').hasError('required')">
+        Please enter a valid email address
+      </mat-error>
+      <mat-error *ngIf="form.getControl('email').hasError('required')">
+        Email is required
+      </mat-error>
     </mat-form-field>
     <mat-form-field class="full-width">
       <input matInput type="password" placeholder="Password" formControlName="password">
+      <mat-error *ngIf="form.getControl('password').hasError('required')">
+        Password is required
+      </mat-error>
     </mat-form-field>
     <p class="text-error">{{loginError}}</p>
     <button type="submit" mat-raised-button color="primary" [disabled]="form.formGroup.invalid">Submit</button>

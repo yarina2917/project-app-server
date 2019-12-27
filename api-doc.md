@@ -21,19 +21,17 @@
         [
             {
                 "_id": "5dfa660287c5ba2d97a86b84",
-                "firstName": "Yana",
-                "lastName": "Yana",
-                "email": "yana@gmail.com",
-                "password": "12345",
-                "role": "Admin"
+                "firstName": "Test1",
+                "lastName": "Test2",
+                "email": "test1@gmail.com",
+                "role": "ADMIN"
             },
             {
                 "_id": "5dfa660287c5ba2d97a86b84",
-                "firstName": "Yana",
-                "lastName": "Yana",
-                "email": "yana@gmail.com",
-                "password": "12345",
-                "role": "User"
+                "firstName": "Test1",
+                "lastName": "Test2",
+                "email": "test2@gmail.com",
+                "role": "USER"
             }
         ]
    ```
@@ -68,11 +66,11 @@
    ```json
         {
             "_id": "5dfa660287c5ba2d97a86b84",
-            "firstName": "Yana",
-            "lastName": "Yana",
-            "email": "yana@gmail.com",
-            "password": "12345",
-            "role": "Admin"
+            "firstName": "Test",
+            "lastName": "Test",
+            "email": "test@gmail.com",
+            "role": "ADMIN",
+            "password": "fd465fds4fsd"
         }
    ```
    
@@ -103,8 +101,6 @@
     
     password = [string] 
     
-    role = [string]
-    
 * **Success Response:**
 
    **Code:** 200
@@ -113,11 +109,10 @@
    ```json
        {
            "_id": "5dfa660287c5ba2d97a86b84",
-           "firstName": "Yana",
-           "lastName": "Yana",
-           "email": "yana@gmail.com",
-           "password": "12345",
-           "role": "Admin"
+           "firstName": "Test",
+           "lastName": "Test",
+           "email": "test@gmail.com",
+           "role": "ADMIN"
        }
    ```
    
@@ -136,11 +131,13 @@
    
 * **Method:**
 
-   GET
+   POST
 
-* **Headers**
+* **Data params**
     
-    Authorization: [string]
+    email = [string]
+    
+    password = [string] 
     
 * **Success Response:**
 
@@ -148,7 +145,15 @@
    
    **Content:** 
    ```json
-        {"token": "f76640a3-1c4e-4e40-9826-8edef0f21ce2"}
+       {
+           "apiKey": "9ca188ff-1285-451c-ac98-9f00a136aae4",
+           "_id": "5dfa660287c5ba2d97a86b84",
+           "firstName": "Test",
+           "lastName": "Test",
+           "email": "test@gmail.com",
+           "password": "fdsa465f4das",
+           "role": "ADMIN"
+       }
    ```
    
 *  **Failure Response:**
@@ -178,7 +183,7 @@
    
    **Content:** 
    ```json
-        {"message": "Successful logout"}
+        {"message": "Success"}
    ```
    
 *  **Failure Response:**
@@ -222,11 +227,10 @@
    ```json
        {
            "_id": "5dfa660287c5ba2d97a86b84",
-           "firstName": "Yana",
-           "lastName": "Yana",
-           "email": "yana@gmail.com",
-           "password": "12345",
-           "role": "Admin"
+           "firstName": "Test",
+           "lastName": "Test",
+           "email": "test@gmail.com",
+           "role": "ADMIN"
        }
    ```
    
@@ -257,7 +261,7 @@
    
    **Content:** 
    ```json
-       {"message": "User was deleted"}
+       {"message": "Success"}
    ```
    
 *  **Failure Response:**

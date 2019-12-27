@@ -12,17 +12,23 @@ import { UserProfileComponent } from './components/admin/user-profile/user-profi
 import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { AdminComponent } from './components/admin/admin.component';
-import { AdminHeaderComponent } from './components/admin/admin-header/admin-header.component';
 
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatTableModule } from '@angular/material/table';
-import { MatRadioModule } from '@angular/material/radio';
+import {
+  MatFormFieldModule,
+  MatInputModule,
+  MatButtonModule,
+  MatTableModule,
+  MatSelectModule,
+  MatDialogModule
+} from '@angular/material';
 
 import { CookieService } from 'ngx-cookie-service';
 import { HeadersInterceptor } from './interceptors/headers.interceptor';
+import { GraphicsComponent } from './components/graphics/graphics.component';
+import { HeaderComponent } from './components/header/header.component';
+import { HomeComponent } from './components/home/home.component';
+import { ModalInfoComponent } from './components/modal-info/modal-info.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +38,10 @@ import { HeadersInterceptor } from './interceptors/headers.interceptor';
     LoginComponent,
     RegistrationComponent,
     AdminComponent,
-    AdminHeaderComponent
+    GraphicsComponent,
+    HeaderComponent,
+    HomeComponent,
+    ModalInfoComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +53,8 @@ import { HeadersInterceptor } from './interceptors/headers.interceptor';
     MatInputModule,
     MatButtonModule,
     MatTableModule,
-    MatRadioModule
+    MatSelectModule,
+    MatDialogModule
   ],
   providers: [
     CookieService,
@@ -53,6 +63,9 @@ import { HeadersInterceptor } from './interceptors/headers.interceptor';
       useClass: HeadersInterceptor,
       multi: true
     }
+  ],
+  entryComponents: [
+    ModalInfoComponent
   ],
   bootstrap: [AppComponent]
 })

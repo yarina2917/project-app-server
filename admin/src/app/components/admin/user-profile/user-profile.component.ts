@@ -1,50 +1,97 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { UsersService } from '../../../services/users/users.service';
 import { RequestsService } from '../../../services/requests/requests.service';
+import { EncryptDecryptService } from '../../../services/encrypt-decrypt.service';
+import { MatDialog } from '@angular/material';
 
-import { RegistrationModel } from '../../registration/registration.model';
-import { roles } from '../user';
-import RegistrationForm from '../../registration/registration.form';
+import { ModalInfoComponent } from '../../modal-info/modal-info.component';
+import UserProfileForm from './user-profile.form';
+import { UserProfileModel } from './user-profile.model';
 
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.scss']
 })
-export class UserProfileComponent implements OnInit {
+export class UserProfileComponent implements OnInit, OnDestroy {
 
-  public model: RegistrationModel;
-  public form: RegistrationForm;
-  public updateInfo = '';
-  public userInfo = null;
-  public roles = roles;
+  public form: UserProfileForm;
+  public model: UserProfileModel;
+  public userData = null;
+  public roles = ['ADMIN', 'USER'];
+  public requests$ = {
+    getUser: null,
+    updateUser: null
+  };
 
   constructor(
     private usersService: UsersService,
     private activatedRoute: ActivatedRoute,
-    private api: RequestsService
+    private api: RequestsService,
+    private encryptDecryptService: EncryptDecryptService,
+    public dialog: MatDialog
   ) {
+    this.model = new UserProfileModel();
   }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.activatedRoute.params.subscribe(data => {
-      this.api.get({url: `/users/get-one/${data.id}`})
+      const id = data.id || this.usersService.getUserData('id');
+      this.requests$.getUser = this.api.get({url: `/users/get-one/${id}`})
         .subscribe(res => {
-          this.userInfo = res;
-          this.model = new RegistrationModel();
-          this.form = new RegistrationForm(this.userInfo);
+          for (const key in res) {
+            this.model[key] = key === 'password' ? this.encryptDecryptService.decrypt(res[key]) : res[key];
+          }
+          this.userData = {...this.model};
+          this.form = new UserProfileForm(this.model);
         });
     });
   }
 
-  public update() {
-    this.api.put({url: `/users/update/${this.userInfo._id}`, body: this.form.formGroup.value})
-      .subscribe(
-        () => this.updateInfo = 'Information was updated',
-        (err) => this.updateInfo = err.error.message
-      );
+  public update(): void {
+    const newData = this.getUserData();
+    if (Object.keys(newData).length) {
+      this.requests$.updateUser = this.api.put({
+        url: `/users/update/${this.model['_id']}`,
+        body: newData
+      })
+        .subscribe(
+          () => {
+            this.userData = {...this.model};
+            this.openDialog('Information was updated');
+          },
+          (err) => this.openDialog(err.error.message)
+        );
+    } else {
+      this.openDialog('Nothing to update');
+    }
+  }
+
+  public getUserData(): any {
+    const newData = {};
+    for (const key in this.model) {
+      if (this.model[key] !== this.userData[key]) {
+        newData[key] = this.model[key];
+      }
+    }
+    return newData;
+  }
+
+  public openDialog(message: string): void {
+    this.dialog.open(ModalInfoComponent, {
+      width: '400px',
+      data: {message}
+    });
+  }
+
+  public ngOnDestroy(): void {
+    for (const item in this.requests$) {
+      if (this.requests$[item]) {
+        this.requests$[item].unsubscribe();
+      }
+    }
   }
 
 }
