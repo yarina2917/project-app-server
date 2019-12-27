@@ -13,8 +13,7 @@ const userSchema = {
       type: 'string'
     },
     password: {
-      type: 'string',
-      minLength: 5
+      type: 'string'
     },
     role: {
       type: 'string'
