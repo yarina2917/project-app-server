@@ -5,8 +5,8 @@ import { UsersService } from '../../../services/users/users.service';
 import { RequestsService } from '../../../services/requests/requests.service';
 
 import { User } from '../../../models/user.interfaces';
-import { ModalInfoComponent } from "../../modal-info/modal-info.component";
-import { MatDialog } from "@angular/material";
+import { ModalInfoComponent } from '../../modal-info/modal-info.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-users-list',
@@ -17,6 +17,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
 
   public displayedColumns: string[] = ['firstName', 'lastName', 'email', 'role', 'actions'];
   public usersData: User[] = [];
+  public userId = '';
   public requests$ = {
     getUser: null,
     deleteUser: null
@@ -30,6 +31,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
   ) { }
 
   public ngOnInit(): void {
+    this.userId = this.usersService.getUserData('id');
     this.requests$.getUser = this.api.get({url: '/users/get'})
       .subscribe((res: User[]) => this.usersData = res);
   }
@@ -41,20 +43,20 @@ export class UsersListComponent implements OnInit, OnDestroy {
   public deleteUser(id: string): void {
     this.requests$.deleteUser = this.api.delete({url: `/users/delete/${id}`})
       .subscribe(() => {
-        this.usersData = this.usersData.filter(user => user._id !== id)
+        this.usersData = this.usersData.filter(user => user._id !== id);
         this.openDialog('User was deleted');
-      })
+      });
   }
 
   public openDialog(message: string): void {
     this.dialog.open(ModalInfoComponent, {
       width: '400px',
-      data: {message: message}
+      data: {message}
     });
   }
 
   public ngOnDestroy(): void {
-    for (let item in this.requests$) {
+    for (const item in this.requests$) {
       if (this.requests$[item]) {
         this.requests$[item].unsubscribe();
       }

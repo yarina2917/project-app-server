@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 
 import { RequestsService } from './services/requests/requests.service';
@@ -10,8 +10,6 @@ import { UsersService } from './services/users/users.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-
-  public route;
 
   constructor(
     private router: Router,
@@ -25,13 +23,13 @@ export class AppComponent implements OnInit {
     });
   }
 
-  public ngOnInit(): void {
-    if (this.userService.loggedIn()) {
-      this.api.get({url: '/users/get-one'})
-        .subscribe((res) => {
-          this.userService.saveUserData({id: res._id, role: res.role});
-        });
-    }
+  public route;
+
+  @HostListener('window:beforeunload', ['$event'])
+  beforeunloadHandler(event) {
+    this.userService.clearLoginData();
   }
+
+  public ngOnInit() {}
 
 }

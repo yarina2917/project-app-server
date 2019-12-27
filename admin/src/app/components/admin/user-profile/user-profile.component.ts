@@ -33,7 +33,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     private encryptDecryptService: EncryptDecryptService,
     public dialog: MatDialog
   ) {
-    this.model = new UserProfileModel;
+    this.model = new UserProfileModel();
   }
 
   public ngOnInit(): void {
@@ -82,14 +82,14 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   public openDialog(message: string): void {
     this.dialog.open(ModalInfoComponent, {
       width: '400px',
-      data: {message: message}
+      data: {message}
     });
   }
 
   public ngOnDestroy(): void {
-    for (let item in this.requests$) {
+    for (const item in this.requests$) {
       if (this.requests$[item]) {
-        this.requests$[item].unsubscribe()
+        this.requests$[item].unsubscribe();
       }
     }
   }
