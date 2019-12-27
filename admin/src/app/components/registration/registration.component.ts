@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { RequestsService } from '../../services/requests/requests.service';
@@ -12,11 +12,12 @@ import RegistrationForm from './registration.form';
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.scss']
 })
-export class RegistrationComponent implements OnInit {
+export class RegistrationComponent implements OnInit, OnDestroy {
 
   public model: RegistrationModel;
   public form: RegistrationForm;
   public registerError = '';
+  public createRequest$ = null;
 
   constructor(
     private router: Router,
@@ -33,7 +34,7 @@ export class RegistrationComponent implements OnInit {
     if (this.model.password !== this.model.confirmPassword) {
       this.registerError = 'Passwords are not equal';
     } else {
-      this.api.post({url: '/users/create', body: this.getUserData()})
+      this.createRequest$ = this.api.post({url: '/users/create', body: this.getUserData()})
         .subscribe(
           res => this.router.navigate(['/login']),
           err => this.registerError = err.error.message
@@ -48,6 +49,12 @@ export class RegistrationComponent implements OnInit {
       email: this.model.email,
       password: this.encryptDecryptService.encrypt(this.model.password)
     };
+  }
+
+  public ngOnDestroy(): void {
+    if (this.createRequest$) {
+      this.createRequest$.unsubscribe();
+    }
   }
 
 }

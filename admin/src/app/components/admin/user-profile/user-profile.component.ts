@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { UsersService } from '../../../services/users/users.service';
@@ -9,19 +9,22 @@ import { MatDialog } from '@angular/material';
 import { ModalInfoComponent } from '../../modal-info/modal-info.component';
 import UserProfileForm from './user-profile.form';
 import { UserProfileModel } from './user-profile.model';
-import { roles } from '../user';
 
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.scss']
 })
-export class UserProfileComponent implements OnInit {
+export class UserProfileComponent implements OnInit, OnDestroy {
 
   public form: UserProfileForm;
   public model: UserProfileModel;
   public userData = null;
-  public roles = roles;
+  public roles = ['ADMIN', 'USER'];
+  public requests$ = {
+    getUser: null,
+    updateUser: null
+  };
 
   constructor(
     private usersService: UsersService,
@@ -36,7 +39,7 @@ export class UserProfileComponent implements OnInit {
   public ngOnInit(): void {
     this.activatedRoute.params.subscribe(data => {
       const id = data.id || this.usersService.getUserData('id');
-      this.api.get({url: `/users/get-one/${id}`})
+      this.requests$.getUser = this.api.get({url: `/users/get-one/${id}`})
         .subscribe(res => {
           for (const key in res) {
             this.model[key] = key === 'password' ? this.encryptDecryptService.decrypt(res[key]) : res[key];
@@ -50,9 +53,15 @@ export class UserProfileComponent implements OnInit {
   public update(): void {
     const newData = this.getUserData();
     if (Object.keys(newData).length) {
-      this.api.put({url: `/users/update/${this.model['_id']}`, body: newData})
+      this.requests$.updateUser = this.api.put({
+        url: `/users/update/${this.model['_id']}`,
+        body: newData
+      })
         .subscribe(
-          () => this.openDialog('Information was updated'),
+          () => {
+            this.userData = {...this.model};
+            this.openDialog('Information was updated');
+          },
           (err) => this.openDialog(err.error.message)
         );
     } else {
@@ -70,12 +79,19 @@ export class UserProfileComponent implements OnInit {
     return newData;
   }
 
-  public openDialog(message): void {
+  public openDialog(message: string): void {
     this.dialog.open(ModalInfoComponent, {
       width: '400px',
       data: {message: message}
     });
   }
 
+  public ngOnDestroy(): void {
+    for (let item in this.requests$) {
+      if (this.requests$[item]) {
+        this.requests$[item].unsubscribe()
+      }
+    }
+  }
 
 }

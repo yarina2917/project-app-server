@@ -4,15 +4,33 @@
   <form [formGroup]="form.formGroup" class="form" (ngSubmit)="update()">
     <mat-form-field class="full-width">
       <input matInput placeholder="First name" formControlName="firstName">
+      <mat-error *ngIf="form.getControl('firstName').hasError('required')">
+        First name is required
+      </mat-error>
     </mat-form-field>
     <mat-form-field class="full-width">
       <input matInput placeholder="Last name" formControlName="lastName">
+      <mat-error *ngIf="form.getControl('lastName').hasError('required')">
+        Last name is required
+      </mat-error>
     </mat-form-field>
     <mat-form-field class="full-width">
       <input matInput placeholder="Email" formControlName="email">
+      <mat-error *ngIf="form.getControl('email').hasError('email') && !form.getControl('email').hasError('required')">
+        Please enter a valid email address
+      </mat-error>
+      <mat-error *ngIf="form.getControl('email').hasError('required')">
+        Email is required
+      </mat-error>
     </mat-form-field>
     <mat-form-field class="full-width">
       <input matInput type="password" placeholder="Password" formControlName="password">
+      <mat-error *ngIf="form.getControl('password').hasError('pattern') && !form.getControl('password').hasError('required')">
+        Minimum 8 characters, at least one letter and number
+      </mat-error>
+      <mat-error *ngIf="form.getControl('password').hasError('required')">
+        Password is required
+      </mat-error>
     </mat-form-field>
     <mat-form-field>
       <mat-label>User role</mat-label>

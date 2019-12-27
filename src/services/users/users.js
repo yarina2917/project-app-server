@@ -55,7 +55,7 @@ function createUser(userData) {
     return new Promise((resolve, reject) => {
         const user = new User(userData)
         user.save()
-            .then(data => resolve(data))
+            .then(data => resolve(pick(data, userFields)))
             .catch(error => reject(createError(error)))
     })
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { UsersService } from '../../services/users/users.service';
@@ -9,7 +9,9 @@ import { RequestsService } from '../../services/requests/requests.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
+
+  public logoutRequest$ = null;
 
   constructor(
     private usersService: UsersService,
@@ -20,11 +22,17 @@ export class HeaderComponent implements OnInit {
   public ngOnInit() {}
 
   public logout(): void {
-    this.api.get({url: '/users/logout'})
+    this.logoutRequest$ = this.api.get({url: '/users/logout'})
       .subscribe(() => {
         this.usersService.clearLoginData();
         this.router.navigate(['/login']);
       });
+  }
+
+  public ngOnDestroy(): void {
+    if (this.logoutRequest$) {
+      this.logoutRequest$.unsubscribe();
+    }
   }
 
 }

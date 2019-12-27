@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { UsersService } from '../../services/users/users.service';
@@ -13,11 +13,12 @@ import LoginForm from './login.form';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
 
   public model: LoginModel;
   public form: LoginForm;
   public loginError = '';
+  public loginRequest$ = null;
 
   constructor(
     private usersService: UsersService,
@@ -36,7 +37,7 @@ export class LoginComponent implements OnInit {
   }
 
   public login(): void {
-    this.api.post({url: '/users/login', body: this.getUserData()})
+    this.loginRequest$ = this.api.post({url: '/users/login', body: this.getUserData()})
       .subscribe(
         (res: any) => {
           this.usersService.setToken(res.apiKey);
@@ -52,6 +53,12 @@ export class LoginComponent implements OnInit {
       email: this.model.email,
       password: this.encryptDecryptService.encrypt(this.model.password)
     };
+  }
+
+  public ngOnDestroy(): void {
+    if (this.loginRequest$) {
+      this.loginRequest$.unsubscribe();
+    }
   }
 
 }

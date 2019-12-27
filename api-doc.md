@@ -21,17 +21,17 @@
         [
             {
                 "_id": "5dfa660287c5ba2d97a86b84",
-                "firstName": "Yana",
-                "lastName": "Yana",
-                "email": "yana@gmail.com",
-                "role": "Admin"
+                "firstName": "Test1",
+                "lastName": "Test2",
+                "email": "test1@gmail.com",
+                "role": "ADMIN"
             },
             {
                 "_id": "5dfa660287c5ba2d97a86b84",
-                "firstName": "Yana",
-                "lastName": "Yana",
-                "email": "yana@gmail.com",
-                "role": "User"
+                "firstName": "Test1",
+                "lastName": "Test2",
+                "email": "test2@gmail.com",
+                "role": "USER"
             }
         ]
    ```
@@ -66,10 +66,11 @@
    ```json
         {
             "_id": "5dfa660287c5ba2d97a86b84",
-            "firstName": "Yana",
-            "lastName": "Yana",
-            "email": "yana@gmail.com",
-            "role": "Admin"
+            "firstName": "Test",
+            "lastName": "Test",
+            "email": "test@gmail.com",
+            "role": "ADMIN",
+            "password": "fd465fds4fsd"
         }
    ```
    
@@ -100,8 +101,6 @@
     
     password = [string] 
     
-    role = [string]
-    
 * **Success Response:**
 
    **Code:** 200
@@ -110,11 +109,10 @@
    ```json
        {
            "_id": "5dfa660287c5ba2d97a86b84",
-           "firstName": "Yana",
-           "lastName": "Yana",
-           "email": "yana@gmail.com",
-           "password": "12345",
-           "role": "Admin"
+           "firstName": "Test",
+           "lastName": "Test",
+           "email": "test@gmail.com",
+           "role": "ADMIN"
        }
    ```
    
@@ -150,11 +148,11 @@
        {
            "apiKey": "9ca188ff-1285-451c-ac98-9f00a136aae4",
            "_id": "5dfa660287c5ba2d97a86b84",
-           "firstName": "Yana",
-           "lastName": "Yana",
-           "email": "yana@gmail.com",
-           "password": "12345",
-           "role": "Admin"
+           "firstName": "Test",
+           "lastName": "Test",
+           "email": "test@gmail.com",
+           "password": "fdsa465f4das",
+           "role": "ADMIN"
        }
    ```
    
@@ -185,7 +183,7 @@
    
    **Content:** 
    ```json
-        {"message": "Successful logout"}
+        {"message": "Success"}
    ```
    
 *  **Failure Response:**
@@ -229,11 +227,10 @@
    ```json
        {
            "_id": "5dfa660287c5ba2d97a86b84",
-           "firstName": "Yana",
-           "lastName": "Yana",
-           "email": "yana@gmail.com",
-           "password": "12345",
-           "role": "Admin"
+           "firstName": "Test",
+           "lastName": "Test",
+           "email": "test@gmail.com",
+           "role": "ADMIN"
        }
    ```
    
@@ -264,7 +261,7 @@
    
    **Content:** 
    ```json
-       {"message": "User was deleted"}
+       {"message": "Success"}
    ```
    
 *  **Failure Response:**

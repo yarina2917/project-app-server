@@ -17,8 +17,8 @@ export default class RegistrationForm {
       firstName: new FormControl(this.model.firstName, {validators: [Validators.required]}),
       lastName: new FormControl(this.model.lastName, {validators: [Validators.required]}),
       email: new FormControl(this.model.email, {validators: [Validators.required, Validators.email]}),
-      password: new FormControl(this.model.password, {validators: [Validators.required, Validators.minLength(5)]}),
-      confirmPassword: new FormControl(this.model.confirmPassword, {validators: [Validators.required, Validators.minLength(5)]})
+      password: new FormControl(this.model.password, {validators: [Validators.required, Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/)]}),
+      confirmPassword: new FormControl(this.model.confirmPassword, {validators: [Validators.required]})
     });
 
     this.formGroup.valueChanges.subscribe((data: any) => {
