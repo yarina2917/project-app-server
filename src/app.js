@@ -3,32 +3,32 @@ const app = express()
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const compression = require('compression')
-require('dotenv').config()
 
 const errorHandler = require('./services/error-handling/error-handler-middleware')
 const { HttpError } = require('./services/error-handling/http.errors')
 const config = require('./config/config')
 const users = require('./api-routes/users')
+require('dotenv').config()
+
 require('./loaders/datastore')
+  .connect()
+  .then(() => {
+      app.use(cors())
+      app.use(compression())
+      app.use(bodyParser.json())
 
-const path = require('path')
+      app.use('/users', users)
 
-// app.get('/admin', (req, res) => {
-//     res.sendFile(path.join(__dirname, '..', config.adminFilePath))
-// })
+      app.use((req, res, next) => {
+          next(new HttpError(`Not Found ${req.path}`, 404))
+      })
 
-app.use(cors())
-app.use(compression())
-app.use(bodyParser.json())
+      app.use(errorHandler)
 
-app.use('/users', users)
+      app.listen(config.port, () => {
+          console.log(`Server works on port ${config.port}`)
+      })
 
-app.use((req, res, next) => {
-    next(new HttpError(`Not Found ${req.path}`, 404))
-})
+  })
+  .catch(console.error)
 
-app.use(errorHandler)
-
-app.listen(config.port, () => {
-    console.log(`Server works on port ${config.port}`)
-})

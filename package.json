@@ -5,6 +5,8 @@
   "main": "src/app.js",
   "scripts": {
     "start": "nodemon app.js",
+    "start-all": "(cd admin && npm start) & npm start",
+    "create-user": "node ./src/scripts/add-user.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

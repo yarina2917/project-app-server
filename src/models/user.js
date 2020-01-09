@@ -22,12 +22,18 @@ const userSchema = new mongoose.Schema({
     apiKey: {
         type: String,
         required: true,
-        default: uuidv4(),
+        default: uuidv4()
     },
     role: {
         type: String,
         default: 'USER',
+        enum: ['USER', 'ADMIN'],
         required: true,
+    }
+}, {
+    timestamps: {
+        createdAt: 'createdAt',
+        updatedAt: 'updatedAt'
     }
 })
 
