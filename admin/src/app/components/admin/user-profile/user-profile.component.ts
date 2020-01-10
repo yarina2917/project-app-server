@@ -73,7 +73,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     const newData = {};
     for (const key in this.model) {
       if (this.model[key] !== this.userData[key]) {
-        newData[key] = this.model[key];
+        newData[key] = key === 'password' ? this.encryptDecryptService.encrypt(this.model[key]) : this.model[key];
       }
     }
     return newData;

@@ -7,7 +7,8 @@
     "start": "nodemon app.js",
     "start-all": "(cd admin && npm start) & npm start",
     "create-user": "node ./src/scripts/add-user.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "standard": "standard"
   },
   "author": "",
   "license": "ISC",
@@ -28,5 +29,10 @@
     "passport-local": "^1.0.0",
     "standard": "^14.3.1",
     "uuid": "^3.3.3"
+  },
+  "standard": {
+    "ignore": [
+      "/admin"
+    ]
   }
 }

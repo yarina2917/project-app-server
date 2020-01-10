@@ -13,22 +13,20 @@ require('dotenv').config()
 require('./loaders/datastore')
   .connect()
   .then(() => {
-      app.use(cors())
-      app.use(compression())
-      app.use(bodyParser.json())
+    app.use(cors())
+    app.use(compression())
+    app.use(bodyParser.json())
 
-      app.use('/users', users)
+    app.use('/users', users)
 
-      app.use((req, res, next) => {
-          next(new HttpError(`Not Found ${req.path}`, 404))
-      })
+    app.use((req, res, next) => {
+      next(new HttpError(`Not Found ${req.path}`, 404))
+    })
 
-      app.use(errorHandler)
+    app.use(errorHandler)
 
-      app.listen(config.port, () => {
-          console.log(`Server works on port ${config.port}`)
-      })
-
+    app.listen(config.port, () => {
+      console.log(`Server works on port ${config.port}`)
+    })
   })
   .catch(console.error)
-
