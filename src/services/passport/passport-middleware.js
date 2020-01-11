@@ -27,6 +27,5 @@ passport.use('local', new LocalStrategy({
     .catch(done)
 }))
 
-
-module.exports.apiKey = passport.authenticate(['api-key'], {session: false})
-module.exports.local = passport.authenticate(['local'], {session: false})
+module.exports.apiKey = passport.authenticate(['api-key'], { session: false })
+module.exports.local = passport.authenticate(['local'], { session: false })

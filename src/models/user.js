@@ -2,39 +2,39 @@ const mongoose = require('mongoose')
 const uuidv4 = require('uuid/v4')
 
 const userSchema = new mongoose.Schema({
-    firstName: {
-        type: String,
-        required: true,
-    },
-    lastName: {
-        type: String,
-        required: true,
-    },
-    email: {
-        type: String,
-        required: true,
-        unique: true
-    },
-    password: {
-        type: String,
-        required: true,
-    },
-    apiKey: {
-        type: String,
-        required: true,
-        default: uuidv4()
-    },
-    role: {
-        type: String,
-        default: 'USER',
-        enum: ['USER', 'ADMIN'],
-        required: true,
-    }
+  firstName: {
+    type: String,
+    required: true
+  },
+  lastName: {
+    type: String,
+    required: true
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  apiKey: {
+    type: String,
+    required: true,
+    default: uuidv4()
+  },
+  role: {
+    type: String,
+    default: 'USER',
+    enum: ['USER', 'ADMIN'],
+    required: true
+  }
 }, {
-    timestamps: {
-        createdAt: 'createdAt',
-        updatedAt: 'updatedAt'
-    }
+  timestamps: {
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  }
 })
 
 const User = mongoose.model('User', userSchema)

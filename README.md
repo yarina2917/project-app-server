@@ -28,3 +28,7 @@
   npm start  
   
 - navigate to http://localhost:4200/
+
+## Test standard
+
+- npm run standard
