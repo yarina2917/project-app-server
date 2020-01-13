@@ -8,6 +8,7 @@ const errorHandler = require('./services/error-handling/error-handler-middleware
 const { HttpError } = require('./services/error-handling/http.errors')
 const config = require('./config/config')
 const users = require('./api-routes/users')
+const files = require('./api-routes/files')
 require('dotenv').config()
 
 require('./loaders/datastore')
@@ -18,6 +19,7 @@ require('./loaders/datastore')
     app.use(bodyParser.json())
 
     app.use('/users', users)
+    app.use('/files', files)
 
     app.use((req, res, next) => {
       next(new HttpError(`Not Found ${req.path}`, 404))
@@ -30,3 +32,5 @@ require('./loaders/datastore')
     })
   })
   .catch(console.error)
+
+module.exports = app

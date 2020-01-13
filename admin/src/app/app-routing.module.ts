@@ -8,6 +8,7 @@ import { LoginComponent } from './components/login/login.component';
 import { AuthenticationGuard } from './guards/authentication-guard';
 import { GraphicsComponent } from './components/graphics/graphics.component';
 import { HomeComponent } from './components/home/home.component';
+import { MediaComponent } from "./components/media/media.component";
 
 const routes: Routes = [
   {path: 'registration', component: RegistrationComponent},
@@ -16,6 +17,7 @@ const routes: Routes = [
   {path: 'user/:id', component: UserProfileComponent, canActivate: [AuthenticationGuard]},
   {path: 'profile', component: UserProfileComponent, canActivate: [AuthenticationGuard]},
   {path: 'graphics', component: GraphicsComponent, canActivate: [AuthenticationGuard]},
+  {path: 'media', component: MediaComponent, canActivate: [AuthenticationGuard]},
   {path: '', component: HomeComponent, canActivate: [AuthenticationGuard]},
   {path: '**', component: HomeComponent}
 ];

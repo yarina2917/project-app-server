@@ -1,0 +1,13 @@
+<div class="media-upload">
+  <input type="file" class="input-file" (change)="onFileChanged($event)" [(ngModel)]="fileInput">
+  <input type="text" class="input-title" placeholder="File title" [(ngModel)]="title">
+  <button mat-raised-button color="primary" (click)="onUpload()" [disabled]="!title || !file">Upload!</button>
+</div>
+
+<ul class="media-list">
+  <li *ngFor="let item of data">
+    <img [src]="item.path" alt="media">
+    <p class="media-title">{{item.title}}</p>
+    <i class="material-icons" (click)="deleteMedia(item)">delete</i>
+  </li>
+</ul>

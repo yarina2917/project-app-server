@@ -13,14 +13,15 @@ import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { AdminComponent } from './components/admin/admin.component';
 
-import { ReactiveFormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {
   MatFormFieldModule,
   MatInputModule,
   MatButtonModule,
   MatTableModule,
   MatSelectModule,
-  MatDialogModule
+  MatDialogModule,
+  MatTabsModule
 } from '@angular/material';
 
 import { CookieService } from 'ngx-cookie-service';
@@ -29,6 +30,8 @@ import { GraphicsComponent } from './components/graphics/graphics.component';
 import { HeaderComponent } from './components/header/header.component';
 import { HomeComponent } from './components/home/home.component';
 import { ModalInfoComponent } from './components/modal-info/modal-info.component';
+import { MediaComponent } from './components/media/media.component';
+import { MediaTabComponent } from './components/media/media-tab/media-tab.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +44,9 @@ import { ModalInfoComponent } from './components/modal-info/modal-info.component
     GraphicsComponent,
     HeaderComponent,
     HomeComponent,
-    ModalInfoComponent
+    ModalInfoComponent,
+    MediaComponent,
+    MediaTabComponent
   ],
   imports: [
     BrowserModule,
@@ -54,7 +59,9 @@ import { ModalInfoComponent } from './components/modal-info/modal-info.component
     MatButtonModule,
     MatTableModule,
     MatSelectModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTabsModule,
+    FormsModule
   ],
   providers: [
     CookieService,

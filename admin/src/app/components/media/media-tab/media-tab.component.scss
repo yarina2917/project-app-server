@@ -1,0 +1,30 @@
+.media-upload {
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  .input-file {
+    margin: 10px 0;
+  }
+  .input-title {
+    padding: 5px;
+    margin-bottom: 10px;
+  }
+}
+
+.media-list {
+  display: flex;
+  li {
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid gray;
+    text-align: center;
+    img {
+      width: 100px;
+      height: auto;
+    }
+    .material-icons {
+      cursor: pointer;
+    }
+  }
+}

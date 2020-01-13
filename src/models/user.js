@@ -1,5 +1,9 @@
 const mongoose = require('mongoose')
-const uuidv4 = require('uuid/v4')
+const uuid = require('uuid')
+
+const roles = ['ADMIN', 'USER']
+const adminRole = 'ADMIN'
+const userRole = 'USER'
 
 const userSchema = new mongoose.Schema({
   firstName: {
@@ -22,12 +26,12 @@ const userSchema = new mongoose.Schema({
   apiKey: {
     type: String,
     required: true,
-    default: uuidv4()
+    default: uuid.v4
   },
   role: {
     type: String,
-    default: 'USER',
-    enum: ['USER', 'ADMIN'],
+    default: userRole,
+    enum: roles,
     required: true
   }
 }, {
@@ -40,3 +44,4 @@ const userSchema = new mongoose.Schema({
 const User = mongoose.model('User', userSchema)
 
 module.exports.User = User
+module.exports.roles = roles
