@@ -13,7 +13,7 @@ module.exports.up = (next) => {
         password: 'testtest',
         role: 'USER'
       }
-      let user = new User(userData)
+      const user = new User(userData)
       user.save()
         .then(() => {
           console.log('Saved')
@@ -30,7 +30,7 @@ module.exports.up = (next) => {
 module.exports.down = (next) => {
   base.connect()
     .then(db => {
-      User.findOneAndRemove({email: 'test@test.com'})
+      User.findOneAndRemove({ email: 'test@test.com' })
         .then(() => {
           console.log('Removed')
           db.disconnect()

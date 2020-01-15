@@ -5,6 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HeadersInterceptor } from './interceptors/headers.interceptor';
+import { CookieService } from 'ngx-cookie-service';
 
 import { AppComponent } from './app.component';
 import { UsersListComponent } from './components/admin/users-list/users-list.component';
@@ -12,6 +14,12 @@ import { UserProfileComponent } from './components/admin/user-profile/user-profi
 import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { AdminComponent } from './components/admin/admin.component';
+import { GraphicsComponent } from './components/graphics/graphics.component';
+import { HeaderComponent } from './components/header/header.component';
+import { HomeComponent } from './components/home/home.component';
+import { ModalInfoComponent } from './components/modal-info/modal-info.component';
+import { MediaComponent } from './components/media/media.component';
+import { MediaTabComponent } from './components/media/media-tab/media-tab.component';
 
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {
@@ -23,15 +31,6 @@ import {
   MatDialogModule,
   MatTabsModule
 } from '@angular/material';
-
-import { CookieService } from 'ngx-cookie-service';
-import { HeadersInterceptor } from './interceptors/headers.interceptor';
-import { GraphicsComponent } from './components/graphics/graphics.component';
-import { HeaderComponent } from './components/header/header.component';
-import { HomeComponent } from './components/home/home.component';
-import { ModalInfoComponent } from './components/modal-info/modal-info.component';
-import { MediaComponent } from './components/media/media.component';
-import { MediaTabComponent } from './components/media/media-tab/media-tab.component';
 
 @NgModule({
   declarations: [

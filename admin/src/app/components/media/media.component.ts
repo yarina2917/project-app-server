@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { RequestsService } from "../../services/requests/requests.service";
 
 @Component({
   selector: 'app-media',
@@ -8,7 +7,7 @@ import { RequestsService } from "../../services/requests/requests.service";
 })
 export class MediaComponent implements OnInit {
 
-  constructor(private api: RequestsService) { }
+  constructor() { }
 
   ngOnInit() {}
 

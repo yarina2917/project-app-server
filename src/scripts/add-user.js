@@ -41,7 +41,7 @@ base.connect()
       }
     ])
       .then(answers => {
-        let user = new User(answers)
+        const user = new User(answers)
         return user.save()
       })
       .then(() => {
@@ -53,6 +53,5 @@ base.connect()
       .then(() => {
         db.disconnect()
       })
-
   })
   .catch(console.error)

@@ -3,6 +3,7 @@ const app = express()
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const compression = require('compression')
+const path = require('path')
 
 const errorHandler = require('./services/error-handling/error-handler-middleware')
 const { HttpError } = require('./services/error-handling/http.errors')
@@ -20,6 +21,7 @@ require('./loaders/datastore')
 
     app.use('/users', users)
     app.use('/files', files)
+    app.use('/files', express.static(path.join(__dirname, '/files')))
 
     app.use((req, res, next) => {
       next(new HttpError(`Not Found ${req.path}`, 404))

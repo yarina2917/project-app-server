@@ -1,14 +1,16 @@
 <div class="container">
   <h1>Media</h1>
-  <mat-tab-group>
-    <mat-tab label="Images">
-      <app-media-tab type="image"></app-media-tab>
-    </mat-tab>
-    <mat-tab label="Video">
-      <app-media-tab type="video"></app-media-tab>
-    </mat-tab>
-    <mat-tab label="Files">
-      <app-media-tab type="files"></app-media-tab>
-    </mat-tab>
-  </mat-tab-group>
+  <div [@.disabled]="true">
+    <mat-tab-group>
+      <mat-tab label="Images">
+        <app-media-tab type="image"></app-media-tab>
+      </mat-tab>
+      <mat-tab label="Audio">
+        <app-media-tab type="audio"></app-media-tab>
+      </mat-tab>
+      <mat-tab label="Files">
+        <app-media-tab type="file"></app-media-tab>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
 </div>

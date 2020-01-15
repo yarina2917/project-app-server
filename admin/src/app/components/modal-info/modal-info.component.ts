@@ -13,11 +13,11 @@ export class ModalInfoComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data
   ) {}
 
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
 
-  ngOnInit() {
+  public ngOnInit() {}
+
+  public onNoClick(): void {
+    this.dialogRef.close();
   }
 
 }

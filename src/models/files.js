@@ -2,21 +2,25 @@ const mongoose = require('mongoose')
 
 const fileSchema = new mongoose.Schema({
   title: {
-    type: String
+    type: String,
+    required: true
   },
   path: {
-    type: String
+    type: String,
+    required: true,
+    unique: true
   },
   type: {
     type: String,
-    enum: ['image', 'video', 'file']
+    enum: ['image', 'audio', 'file'],
+    required: true
   }
 }, {
-    timestamps: {
-      createdAt: 'createdAt',
-      updatedAt: 'updatedAt'
-    }
+  timestamps: {
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
   }
+}
 )
 
 const File = mongoose.model('File', fileSchema)

@@ -5,6 +5,7 @@
   margin: 0 auto;
   .input-file {
     margin: 10px 0;
+    outline: none;
   }
   .input-title {
     padding: 5px;
@@ -14,17 +15,40 @@
 
 .media-list {
   display: flex;
+  flex-wrap: wrap;
   li {
+    position: relative;
     margin: 10px;
     padding: 10px;
-    border: 1px solid gray;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
     text-align: center;
     img {
-      width: 100px;
+      width: 300px;
       height: auto;
     }
-    .material-icons {
-      cursor: pointer;
+    audio {
+      outline: none;
     }
+    .delete-icon {
+      opacity: 0;
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      cursor: pointer;
+      padding: 3px;
+      background-color: white;
+      border: 1px solid black;
+      &:hover {
+        opacity: 1;
+      }
+    }
+    a {
+      color: black;
+      font-size: 23px;
+      border-bottom: 1px solid gray;
+    }
+  }
+  &.files-list li {
+    padding: 20px;
   }
 }
