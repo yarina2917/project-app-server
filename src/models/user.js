@@ -45,3 +45,5 @@ const User = mongoose.model('User', userSchema)
 
 module.exports.User = User
 module.exports.roles = roles
+module.exports.adminRole = adminRole
+module.exports.userRole = userRole

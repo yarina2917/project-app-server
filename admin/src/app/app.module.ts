@@ -29,7 +29,9 @@ import {
   MatTableModule,
   MatSelectModule,
   MatDialogModule,
-  MatTabsModule
+  MatTabsModule,
+  MatPaginatorModule,
+  MatSortModule
 } from '@angular/material';
 
 @NgModule({
@@ -60,6 +62,8 @@ import {
     MatSelectModule,
     MatDialogModule,
     MatTabsModule,
+    MatPaginatorModule,
+    MatSortModule,
     FormsModule
   ],
   providers: [

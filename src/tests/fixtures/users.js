@@ -11,7 +11,7 @@ module.exports = {
       email: 'user@test.com',
       password: 'U2FsdGVkX19KO1xPVs33DKPnktxuZrJbpztX82t8Ll0=',
       firstName: 'user',
-      lastName: 'user',
+      lastName: 'user'
     }
   ]
 }

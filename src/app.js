@@ -1,5 +1,4 @@
 const express = require('express')
-const app = express()
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const compression = require('compression')
@@ -10,6 +9,9 @@ const { HttpError } = require('./services/error-handling/http.errors')
 const config = require('./config/config')
 const users = require('./api-routes/users')
 const files = require('./api-routes/files')
+
+const app = express()
+
 require('dotenv').config()
 
 require('./loaders/datastore')

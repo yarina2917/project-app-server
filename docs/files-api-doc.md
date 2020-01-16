@@ -26,7 +26,7 @@
         {
             "_id": "5dfa660287c5ba2d97a86b84",
             "title": "Test",
-            "path": "test.jpg",
+            "path": "test.jpg"
         }
    ```
    

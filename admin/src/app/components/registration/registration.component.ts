@@ -1,11 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { UsersService } from '../../services/users/users.service';
 import { RequestsService } from '../../services/requests/requests.service';
 import { EncryptDecryptService } from '../../services/encrypt-decrypt.service';
 
 import { RegistrationModel } from './registration.model';
 import RegistrationForm from './registration.form';
+
 
 @Component({
   selector: 'app-registration',
@@ -22,7 +24,8 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private api: RequestsService,
-    private encryptDecryptService: EncryptDecryptService
+    private encryptDecryptService: EncryptDecryptService,
+    private usersService: UsersService,
   ) {
     this.model = new RegistrationModel();
     this.form = new RegistrationForm(this.model);
@@ -36,7 +39,11 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     } else {
       this.createRequest$ = this.api.post({url: '/users/create', body: this.getUserData()})
         .subscribe(
-          res => this.router.navigate(['/login']),
+          res => {
+            this.usersService.setToken(res.apiKey);
+            this.usersService.saveUserData({id: res._id, role: res.role});
+            this.router.navigate(['']);
+          },
           err => this.registerError = err.error.message
         );
     }

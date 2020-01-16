@@ -32,7 +32,6 @@ module.exports.down = (next) => {
     .then(db => {
       User.findOneAndRemove({ email: 'test@test.com' })
         .then(() => {
-          console.log('Removed')
           db.disconnect()
           return next()
         })

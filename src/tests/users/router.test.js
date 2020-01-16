@@ -22,7 +22,7 @@ describe('Users', () => {
         id = data._id
         console.log('save')
       })
-      .catch(error => console.log('error save'))
+      .catch(() => console.log('error save'))
   })
 
   it('it should create new user', done => {
@@ -35,9 +35,6 @@ describe('Users', () => {
         }
         res.should.have.status(200)
         res.body.should.be.a('object')
-        res.body.firstName.should.be.eq(mockUsers.users[1].firstName)
-        res.body.lastName.should.be.eq(mockUsers.users[1].lastName)
-        res.body.email.should.be.eq(mockUsers.users[1].email)
         res.body.role.should.be.eq('USER')
         res.body._id.should.be.a('string')
         done()
@@ -49,9 +46,6 @@ describe('Users', () => {
       .post('/users/create')
       .send(mockUsers.users[1])
       .end((err, res) => {
-        if (err && err.status !== 400) {
-          throw err
-        }
         res.should.have.status(400)
         res.body.message.should.include('Email is already used')
         done()
@@ -62,9 +56,6 @@ describe('Users', () => {
     chai.request(server)
       .get('/users/get')
       .end((err, res) => {
-        if (err && err.status !== 401) {
-          throw err
-        }
         res.should.have.status(401)
         done()
       })
@@ -76,6 +67,7 @@ describe('Users', () => {
       .set('x-api-key', apiKey)
       .end((err, res) => {
         res.should.have.status(200)
+        res.body.should.be.a('object')
         res.body.firstName.should.be.eq(mockUsers.users[0].firstName)
         res.body.lastName.should.be.eq(mockUsers.users[0].lastName)
         res.body.email.should.be.eq(mockUsers.users[0].email)
@@ -106,9 +98,6 @@ describe('Users', () => {
       .send(params)
       .set('x-api-key', apiKey)
       .end((err, res) => {
-        if (err) {
-          throw err
-        }
         res.should.have.status(200)
         res.body.firstName.should.be.eq(params.firstName)
         res.body.lastName.should.be.eq(params.lastName)
@@ -130,11 +119,11 @@ describe('Users', () => {
   })
 
   after(() => {
-    mockUsers.users.forEach(async el => {
+    mockUsers.users.forEach(async user => {
       await User
-        .findOneAndRemove({ email: el.email })
+        .findOneAndRemove({ email: user.email })
         .then(() => console.log('remove'))
-        .catch(error => console.log('error remove'))
+        .catch(() => console.log('error remove'))
     })
   })
 })

@@ -7,8 +7,12 @@ const fileSchema = new mongoose.Schema({
   },
   path: {
     type: String,
-    required: true,
+    // required: true,
     unique: true
+  },
+  users: {
+    type: Array,
+    required: true,
   },
   type: {
     type: String,

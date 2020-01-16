@@ -5,17 +5,19 @@ const path = require('path')
 const File = require('../../models/files').File
 const { createError } = require('../error-handling/http.errors')
 const filePath = path.join(__dirname, '../../files/')
+const { adminRole } = require('../../models/user')
 
-function getFiles (type) {
+function getFiles (type, user) {
+  const search = user.role === adminRole ? { type: type } : { type: type, users: user._id }
   return new Promise((resolve, reject) => {
     File
-      .find({ type: type })
+      .find(search)
       .then(data => resolve(data))
       .catch(error => reject(createError(error)))
   })
 }
 
-function saveFile (fileData, params) {
+function saveFile (fileData, params, id) {
   return new Promise((resolve, reject) => {
     const path = `${uuid.v4()}.${params.extname}`
     fs.writeFile(filePath + path, fileData, (err) => {
@@ -25,7 +27,8 @@ function saveFile (fileData, params) {
       const file = new File({
         title: params.title,
         path: path,
-        type: params.type
+        type: params.type,
+        users: [id]
       })
       file
         .save()
@@ -43,7 +46,7 @@ function deleteFile (id, path) {
       }
       File
         .findOneAndRemove({ _id: id })
-        .then(data => resolve({ message: 'Success' }))
+        .then(() => resolve({ message: 'Success' }))
         .catch(error => reject(createError(error)))
     })
   })
