@@ -1,8 +1,21 @@
-table {
+.users-list-container {
   width: 80%;
   margin: 0 auto;
-  .material-icons {
-    cursor: pointer;
-    margin-right: 15px;
+  .user-filter {
+    display: flex;
+    justify-content: center;
+  }
+  table, mat-paginator {
+    width: 100%;
+    .material-icons {
+      cursor: pointer;
+      margin-right: 15px;
+    }
+  }
+  .change-access-button {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
   }
 }
+

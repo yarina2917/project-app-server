@@ -42,7 +42,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       this.requests$.getUser = this.api.get({url: `/users/get-one/${id}`})
         .subscribe(res => {
           for (const key in res) {
-            this.model[key] = key === 'password' ? this.encryptDecryptService.decrypt(res[key]) : res[key];
+            if (res[key]) {
+              this.model[key] = key === 'password' ? this.encryptDecryptService.decrypt(res[key]) : res[key];
+            }
           }
           this.userData = {...this.model};
           this.form = new UserProfileForm(this.model);
@@ -60,6 +62,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         .subscribe(
           () => {
             this.userData = {...this.model};
+            if (this.usersService.getUserData('id') === this.userData['_id']) {
+              this.usersService.adminAccess = this.userData['role'] === 'ADMIN';
+            }
             this.openDialog('Information was updated');
           },
           (err) => this.openDialog(err.error.message)

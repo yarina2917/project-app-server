@@ -1,0 +1,24 @@
+<div class="media-upload">
+  <input type="file" class="input-file" (change)="onFileChanged($event.target)"
+         [(ngModel)]="model.fileInput" [accept]="type === 'file' ? model.filesExt : type + '/*'">
+  <input type="text" class="input-title" placeholder="File title" [(ngModel)]="model.title">
+  <button mat-raised-button color="primary" (click)="onUpload()" [disabled]="!model.title || !model.file">Upload!</button>
+</div>
+
+<ul class="media-list" [ngClass]="{'files-list': type === 'file'}">
+  <li *ngFor="let item of model.data">
+
+    <img [src]="model.fileUrl + item.path" alt="media" *ngIf="type === 'image'">
+    <audio controls *ngIf="type === 'audio'">
+      <source [src]="model.fileUrl + item.path">
+      Your browser does not support the audio element.
+    </audio>
+    <a [href]="model.fileUrl + item.path" target="_blank" class="media-title" *ngIf="type === 'file'">{{item.title}}</a>
+
+    <p class="media-title" *ngIf="type !== 'file'">{{item.title}}</p>
+    <div class="media-icons">
+      <i class="material-icons edit-icon" (click)="changeAccess(item._id)" *ngIf="usersService.adminAccess">edit</i>
+      <i class="material-icons delete-icon" (click)="deleteMedia(item)">delete</i>
+    </div>
+  </li>
+</ul>

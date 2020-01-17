@@ -1,8 +1,9 @@
 <header>
   <div class="menu">
-    <button mat-raised-button color="primary"><a routerLink="/graphics">Graphics</a></button>
-    <button mat-raised-button color="primary"><a routerLink="/profile">Profile</a></button>
-    <button mat-raised-button color="primary" *ngIf="usersService.adminAccess"><a routerLink="/users">Users</a></button>
+    <button routerLink="/graphics" mat-raised-button color="primary">Graphics</button>
+    <button routerLink="/media" mat-raised-button color="primary">Media</button>
+    <button routerLink="/profile" mat-raised-button color="primary">Profile</button>
+    <button routerLink="/users" mat-raised-button color="primary" *ngIf="usersService.adminAccess">Users</button>
     <button mat-raised-button color="primary" (click)="logout()">Logout</button>
   </div>
 </header>

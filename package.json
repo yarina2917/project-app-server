@@ -7,7 +7,10 @@
     "start": "nodemon app.js",
     "start-all": "(cd admin && npm start) & npm start",
     "create-user": "node ./src/scripts/add-user.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "migrate-user-up": "migrate up 1578746764570-create-user.js",
+    "migrate-user-down": "migrate down 1578746764570-create-user.js",
+    "test": "node_modules/mocha/bin/mocha ./src/tests/**/*.test.js",
+    "test:dev": "nodemon --exec node_modules/mocha/bin/mocha ./src/tests/**/*.test.js",
     "standard": "standard"
   },
   "author": "",
@@ -22,7 +25,9 @@
     "crypto-js": "^3.1.9-1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "inquirer": "^7.0.3",
     "lodash": "^4.17.15",
+    "migrate": "^1.6.2",
     "mongoose": "^5.8.0",
     "passport": "^0.4.1",
     "passport-custom": "^1.1.0",
@@ -34,5 +39,10 @@
     "ignore": [
       "/admin"
     ]
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "mocha": "^7.0.0"
   }
 }

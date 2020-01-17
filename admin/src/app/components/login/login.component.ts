@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   public login(): void {
     this.loginRequest$ = this.api.post({url: '/users/login', body: this.getUserData()})
       .subscribe(
-        (res: any) => {
+        res => {
           this.usersService.setToken(res.apiKey);
           this.usersService.saveUserData({id: res._id, role: res.role});
           this.router.navigate(['']);

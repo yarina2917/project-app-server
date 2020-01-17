@@ -1,61 +1,57 @@
-const mongoose = require('mongoose')
-const readline = require('readline')
+const inquirer = require('inquirer')
+const base = require('../loaders/datastore')
 
 const User = require('../models/user').User
-const config = require('../config/config')
+const roles = require('../models/user').roles
 
-const fields = [
-  {
-    title: 'First name: ',
-    prop: 'firstName'
-  }, {
-    title: 'Last name: ',
-    prop: 'lastName'
-  }, {
-    title: 'Email: ',
-    prop: 'email'
-  }, {
-    title: 'Password: ',
-    prop: 'password'
-  }, {
-    title: 'Role: ',
-    prop: 'role'
-  }]
-
-const userData = {}
-let activeField = 0
-
-mongoose.connect(config.dbUrl, config.dbOptions)
-
-const db = mongoose.connection
-
-db.once('open', () => {
-  const stream = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-    prompt: fields[activeField].title
+base.connect()
+  .then(db => {
+    return inquirer.prompt([
+      {
+        type: 'input',
+        name: 'firstName',
+        message: 'First name:'
+      },
+      {
+        type: 'input',
+        name: 'lastName',
+        message: 'Last name:'
+      },
+      {
+        type: 'input',
+        name: 'email',
+        message: 'Email:'
+      },
+      {
+        type: 'password',
+        name: 'password',
+        message: 'Password:'
+      },
+      {
+        type: 'list',
+        name: 'role',
+        message: 'Role:',
+        choices: roles.map(role => {
+          return {
+            name: role.toLowerCase(),
+            value: role
+          }
+        }),
+        default: roles[0]
+      }
+    ])
+      .then(answers => {
+        const user = new User(answers)
+        return user.save()
+      })
+      .then(() => {
+        console.log('Saved')
+      })
+      .catch(err => {
+        console.error('Failed to create user', err)
+      })
+      .then(() => {
+        db.disconnect()
+      })
   })
-  stream.prompt()
-  stream.on('line', (line) => {
-    userData[fields[activeField].prop] = line
-    if (activeField + 1 < fields.length) {
-      stream.setPrompt(fields[++activeField].title)
-      stream.prompt()
-    } else {
-      const user = new User(userData)
-      user.save()
-        .then((res) => {
-          console.log('Success: ', res)
-          db.close()
-          process.exit(1)
-        })
-        .catch(err => {
-          console.log('Error: ', err)
-          db.close()
-          process.exit(1)
-        })
-    }
-  })
-})
-
-db.on('error', console.error.bind(console, 'Сonnection error:'))
+  .catch(console.error)

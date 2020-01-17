@@ -10,6 +10,10 @@ body {
   background: linear-gradient(90deg, rgba(233,234,235,1) 33%, rgba(252,242,252,1) 69%);
 }
 
+ul, li {
+  list-style: none;
+}
+
 a, a:active, a:visited {
   color: white;
   text-decoration: none;

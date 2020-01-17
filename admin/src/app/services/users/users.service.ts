@@ -36,7 +36,7 @@ export class UsersService {
     return prop ? this.userData[prop] : this.userData;
   }
 
-  public clearLoginData() {
+  public clearLoginData(): void {
     this.userData = {};
     this.cookieService.delete('token');
   }

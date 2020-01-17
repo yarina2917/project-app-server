@@ -1,0 +1,54 @@
+.media-upload {
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  .input-file {
+    margin: 10px 0;
+    outline: none;
+  }
+  .input-title {
+    padding: 5px;
+    margin-bottom: 10px;
+  }
+}
+
+.media-list {
+  display: flex;
+  flex-wrap: wrap;
+  li {
+    position: relative;
+    margin: 10px;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    text-align: center;
+    img {
+      width: 300px;
+      height: auto;
+    }
+    audio {
+      outline: none;
+    }
+    .media-icons {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      display: flex;
+      flex-direction: column;
+      .material-icons {
+        cursor: pointer;
+        padding: 3px;
+        background-color: white;
+        border: 1px solid black;
+      }
+    }
+    a {
+      color: black;
+      font-size: 23px;
+      border-bottom: 1px solid gray;
+    }
+  }
+  &.files-list li {
+    padding: 20px;
+  }
+}

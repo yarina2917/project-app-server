@@ -1,4 +1,4 @@
-const uuidv4 = require('uuid/v4')
+const uuid = require('uuid')
 const pick = require('lodash/pick')
 
 const User = require('../../models/user').User
@@ -37,7 +37,7 @@ function getUserByToken (headers) {
 function loginUser (userData) {
   return new Promise((resolve, reject) => {
     User
-      .findOneAndUpdate({ email: userData.email }, { apiKey: uuidv4() }, { new: true })
+      .findOneAndUpdate({ email: userData.email }, { apiKey: uuid.v4() }, { new: true })
       .then(data => resolve(data))
       .catch(error => reject(createError(error)))
   })
@@ -45,7 +45,7 @@ function loginUser (userData) {
 
 function logoutUser (headers) {
   return new Promise((resolve, reject) => {
-    User.findOneAndUpdate({ apiKey: headers['x-api-key'] }, { apiKey: uuidv4() })
+    User.findOneAndUpdate({ apiKey: headers['x-api-key'] }, { apiKey: uuid.v4() })
       .then(data => resolve({ message: 'Success' }))
       .catch(error => reject(createError(error)))
   })
@@ -55,7 +55,7 @@ function createUser (userData) {
   return new Promise((resolve, reject) => {
     const user = new User(userData)
     user.save()
-      .then(data => resolve(pick(data, userFields)))
+      .then(data => resolve(data))
       .catch(error => reject(createError(error)))
   })
 }
