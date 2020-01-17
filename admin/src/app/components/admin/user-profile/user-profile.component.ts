@@ -62,7 +62,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         .subscribe(
           () => {
             this.userData = {...this.model};
-            this.usersService.adminAccess = this.userData['role'] === 'ADMIN';
+            if (this.usersService.getUserData('id') === this.userData['_id']) {
+              this.usersService.adminAccess = this.userData['role'] === 'ADMIN';
+            }
             this.openDialog('Information was updated');
           },
           (err) => this.openDialog(err.error.message)

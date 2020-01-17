@@ -4,6 +4,7 @@ import { MediaModel } from './media.model';
 import { MatDialog } from '@angular/material';
 import { ModalInfoComponent } from '../../modal-info/modal-info.component';
 import { UsersService } from '../../../services/users/users.service';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-media-tab',
@@ -24,7 +25,8 @@ export class MediaTabComponent implements OnInit, OnDestroy {
   constructor(
     private api: RequestsService,
     public dialog: MatDialog,
-    private usersService: UsersService
+    private usersService: UsersService,
+    private router: Router
   ) {
     this.model = new MediaModel();
   }
@@ -63,6 +65,10 @@ export class MediaTabComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.model.data = this.model.data.filter(el => el._id !== item._id);
       });
+  }
+
+  public changeAccess(id: string): void {
+    this.router.navigate([`media/${id}`]);
   }
 
   public openDialog(message: string): void {

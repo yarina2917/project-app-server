@@ -8,6 +8,23 @@
 
     <table mat-table [dataSource]="usersData" class="mat-elevation-z8" matSort>
 
+      <!-- Checkbox Column -->
+      <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef>
+          <mat-checkbox (change)="$event ? masterToggle() : null"
+                        [checked]="selection.hasValue() && isAllSelected()"
+                        [indeterminate]="selection.hasValue() && !isAllSelected()">
+          </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <mat-checkbox (click)="$event.stopPropagation()"
+                        (change)="$event ? selection.toggle(row) : null"
+                        [checked]="selection.isSelected(row)"
+                        [disabled]="row.role === 'ADMIN'">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+
       <!-- First Name Column -->
       <ng-container matColumnDef="firstName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> First name </th>
@@ -48,6 +65,13 @@
     </table>
 
     <mat-paginator class="mat-elevation-z8" [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+
+    <div *ngIf="tableType === 'mediaAccess'" class="change-access-button">
+      <button type="submit" mat-raised-button color="primary" (click)="changeAccess()">
+        Change access
+      </button>
+    </div>
+
   </div>
 </div>
 

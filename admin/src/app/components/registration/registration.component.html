@@ -39,7 +39,7 @@
     </mat-form-field>
     <p class="text-error">{{registerError}}</p>
     <button type="submit" mat-raised-button color="primary" [disabled]="form.formGroup.invalid">Submit</button>
-    <button mat-raised-button color="primary"><a routerLink="/login">Go to login</a></button>
+    <button routerLink="/login" mat-raised-button color="primary">Go to login</button>
   </form>
 </div>
 

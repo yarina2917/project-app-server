@@ -31,8 +31,10 @@ import {
   MatDialogModule,
   MatTabsModule,
   MatPaginatorModule,
-  MatSortModule
+  MatSortModule,
+  MatCheckboxModule
 } from '@angular/material';
+import { MediaAccessComponent } from './components/media/media-access/media-access.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +49,8 @@ import {
     HomeComponent,
     ModalInfoComponent,
     MediaComponent,
-    MediaTabComponent
+    MediaTabComponent,
+    MediaAccessComponent
   ],
   imports: [
     BrowserModule,
@@ -64,6 +67,7 @@ import {
     MatTabsModule,
     MatPaginatorModule,
     MatSortModule,
+    MatCheckboxModule,
     FormsModule
   ],
   providers: [

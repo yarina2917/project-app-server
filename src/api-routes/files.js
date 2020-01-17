@@ -13,6 +13,18 @@ router.get('/get', authentication.apiKey, (req, res, next) => {
     .catch(next)
 })
 
+router.get('/get/:id', authentication.apiKey, (req, res, next) => {
+  fileService.getFile(req.params.id)
+    .then(data => res.status(200).send(data))
+    .catch(next)
+})
+
+router.post('/change-access', authentication.apiKey, (req, res, next) => {
+  fileService.changeAccess(req.body)
+    .then(data => res.status(200).send(data))
+    .catch(next)
+})
+
 router.post('/upload', authentication.apiKey, (req, res, next) => {
   const chunks = []
   req

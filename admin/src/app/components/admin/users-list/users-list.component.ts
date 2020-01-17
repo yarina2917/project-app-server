@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { UsersService } from '../../../services/users/users.service';
@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-users-list',
@@ -21,12 +22,19 @@ export class UsersListComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  public displayedColumns: string[] = ['firstName', 'lastName', 'email', 'role', 'actions'];
+  @Input() tableType: string;
+  @Input() fileData: any;
+
+  public displayedColumns;
+  public usersListColumns: string[] = ['firstName', 'lastName', 'email', 'role', 'actions'];
+  public mediaAccessColumns: string[] = ['select', 'firstName', 'lastName', 'email', 'role'];
   public usersData: MatTableDataSource<User>;
+  public selection = new SelectionModel<User>(true, []);
   public userId = '';
   public requests$ = {
     getUser: null,
-    deleteUser: null
+    deleteUser: null,
+    access: null
   };
 
   constructor(
@@ -34,7 +42,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
     private router: Router,
     private api: RequestsService,
     public dialog: MatDialog
-  ) { }
+  ) {}
 
   public ngOnInit(): void {
     this.userId = this.usersService.getUserData('id');
@@ -43,6 +51,12 @@ export class UsersListComponent implements OnInit, OnDestroy {
         this.usersData = new MatTableDataSource(res);
         this.usersData.paginator = this.paginator;
         this.usersData.sort = this.sort;
+        if (this.tableType === 'mediaAccess') {
+          this.selection = new SelectionModel<User>(true, res.filter(el => this.fileData.users.includes(el._id)));
+          this.displayedColumns = this.mediaAccessColumns;
+        } else {
+          this.displayedColumns = this.usersListColumns
+        }
       });
   }
 
@@ -50,19 +64,12 @@ export class UsersListComponent implements OnInit, OnDestroy {
     this.router.navigate([`user/${id}`]);
   }
 
-  public deleteUser({id, firstName, lastName}): void {
+  public deleteUser({_id: id, firstName, lastName}): void {
     this.requests$.deleteUser = this.api.delete({url: `/users/delete/${id}`})
       .subscribe(() => {
         this.usersData.data = this.usersData.data.filter(user => user._id !== id);
         this.openDialog(`User ${firstName} ${lastName} was deleted`);
       });
-  }
-
-  public openDialog(message: string): void {
-    this.dialog.open(ModalInfoComponent, {
-      width: '400px',
-      data: {message}
-    });
   }
 
   public applyFilter(filterValue: string): void {
@@ -71,6 +78,30 @@ export class UsersListComponent implements OnInit, OnDestroy {
     if (this.usersData.paginator) {
       this.usersData.paginator.firstPage();
     }
+  }
+
+  public isAllSelected() {
+    return this.selection.selected.length === this.usersData.data.length;
+  }
+
+  public masterToggle() {
+    return this.isAllSelected() ?
+      this.selection.clear() :
+      this.usersData.data.forEach(row => this.selection.select(row));
+  }
+
+  public changeAccess() {
+    this.requests$.access = this.api.post({
+      url: '/files/change-access', body: {id: this.fileData._id, users: this.selection.selected}
+    })
+      .subscribe(() => this.openDialog('Access to file was updated'))
+  }
+
+  public openDialog(message: string): void {
+    this.dialog.open(ModalInfoComponent, {
+      width: '400px',
+      data: {message}
+    });
   }
 
   public ngOnDestroy(): void {
