@@ -11,6 +11,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
+import { UserListModel } from './user-list.model';
 
 @Component({
   selector: 'app-users-list',
@@ -25,12 +26,9 @@ export class UsersListComponent implements OnInit, OnDestroy {
   @Input() tableType: string;
   @Input() fileData: any;
 
-  public displayedColumns;
-  public usersListColumns: string[] = ['firstName', 'lastName', 'email', 'role', 'actions'];
-  public mediaAccessColumns: string[] = ['select', 'firstName', 'lastName', 'email', 'role'];
+  public model: UserListModel;
   public usersData: MatTableDataSource<User>;
   public selection = new SelectionModel<User>(true, []);
-  public userId = '';
   public requests$ = {
     getUser: null,
     deleteUser: null,
@@ -42,10 +40,12 @@ export class UsersListComponent implements OnInit, OnDestroy {
     private router: Router,
     private api: RequestsService,
     public dialog: MatDialog
-  ) {}
+  ) {
+    this.model = new UserListModel();
+  }
 
   public ngOnInit(): void {
-    this.userId = this.usersService.getUserData('id');
+    this.model.userId = this.usersService.getUserData('id');
     this.requests$.getUser = this.api.get({url: '/users/get'})
       .subscribe((res: User[]) => {
         this.usersData = new MatTableDataSource(res);
@@ -53,9 +53,9 @@ export class UsersListComponent implements OnInit, OnDestroy {
         this.usersData.sort = this.sort;
         if (this.tableType === 'mediaAccess') {
           this.selection = new SelectionModel<User>(true, res.filter(el => this.fileData.users.includes(el._id)));
-          this.displayedColumns = this.mediaAccessColumns;
+          this.model.displayedColumns = this.model.mediaAccessColumns;
         } else {
-          this.displayedColumns = this.usersListColumns
+          this.model.displayedColumns = this.model.usersListColumns;
         }
       });
   }
@@ -80,7 +80,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
     }
   }
 
-  public isAllSelected() {
+  public isAllSelected(): boolean {
     return this.selection.selected.length === this.usersData.data.length;
   }
 
@@ -90,7 +90,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
       this.usersData.data.forEach(row => this.selection.select(row));
   }
 
-  public changeAccess() {
+  public changeAccess(): void {
     this.requests$.access = this.api.post({
       url: '/files/change-access', body: {id: this.fileData._id, users: this.selection.selected}
     })

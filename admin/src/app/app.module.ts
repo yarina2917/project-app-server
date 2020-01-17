@@ -20,8 +20,9 @@ import { HomeComponent } from './components/home/home.component';
 import { ModalInfoComponent } from './components/modal-info/modal-info.component';
 import { MediaComponent } from './components/media/media.component';
 import { MediaTabComponent } from './components/media/media-tab/media-tab.component';
+import { MediaAccessComponent } from './components/media/media-access/media-access.component';
 
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   MatFormFieldModule,
   MatInputModule,
@@ -34,7 +35,7 @@ import {
   MatSortModule,
   MatCheckboxModule
 } from '@angular/material';
-import { MediaAccessComponent } from './components/media/media-access/media-access.component';
+
 
 @NgModule({
   declarations: [

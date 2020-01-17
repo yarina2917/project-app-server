@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { UsersService } from "../../../services/users/users.service";
-import {ActivatedRoute} from "@angular/router";
-import {RequestsService} from "../../../services/requests/requests.service";
+import { ActivatedRoute } from '@angular/router';
+
+import { UsersService } from '../../../services/users/users.service';
+import { RequestsService } from '../../../services/requests/requests.service';
 
 @Component({
   selector: 'app-media-access',
@@ -22,7 +23,7 @@ export class MediaAccessComponent implements OnInit {
     this.activatedRoute.params.subscribe(data => {
       this.api.get({url: `/files/get/${data.id}`})
         .subscribe(res => this.fileData = res);
-    })
+    });
   }
 
 }

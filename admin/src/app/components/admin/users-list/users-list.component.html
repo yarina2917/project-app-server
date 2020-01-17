@@ -55,13 +55,13 @@
         <td mat-cell *matCellDef="let element">
           <div>
             <i class="material-icons" (click)="editUser(element._id)">edit</i>
-            <i class="material-icons" (click)="deleteUser(element)" *ngIf="element._id !== userId">delete</i>
+            <i class="material-icons" (click)="deleteUser(element)" *ngIf="element._id !== model.userId">delete</i>
           </div>
         </td>
       </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr mat-header-row *matHeaderRowDef="model.displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: model.displayedColumns;"></tr>
     </table>
 
     <mat-paginator class="mat-elevation-z8" [pageSizeOptions]="[10, 25, 100]"></mat-paginator>

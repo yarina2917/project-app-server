@@ -1,10 +1,12 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { RequestsService } from '../../../services/requests/requests.service';
+import { UsersService } from '../../../services/users/users.service';
+
 import { MediaModel } from './media.model';
 import { MatDialog } from '@angular/material';
 import { ModalInfoComponent } from '../../modal-info/modal-info.component';
-import { UsersService } from '../../../services/users/users.service';
-import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-media-tab',
