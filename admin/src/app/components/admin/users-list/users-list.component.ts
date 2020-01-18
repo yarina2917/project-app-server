@@ -25,6 +25,9 @@ export class UsersListComponent implements OnInit, OnDestroy {
 
   @Input() tableType: string;
   @Input() fileData: any;
+  @Input() set users(data) {
+    this.setTableData(data);
+  }
 
   public model: UserListModel;
   public usersData: MatTableDataSource<User>;
@@ -48,9 +51,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
     this.model.userId = this.usersService.getUserData('id');
     this.requests$.getUser = this.api.get({url: '/users/get'})
       .subscribe((res: User[]) => {
-        this.usersData = new MatTableDataSource(res);
-        this.usersData.paginator = this.paginator;
-        this.usersData.sort = this.sort;
+        this.setTableData(res);
         if (this.tableType === 'mediaAccess') {
           this.selection = new SelectionModel<User>(true, res.filter(el => this.fileData.users.includes(el._id)));
           this.model.displayedColumns = this.model.mediaAccessColumns;
@@ -58,6 +59,12 @@ export class UsersListComponent implements OnInit, OnDestroy {
           this.model.displayedColumns = this.model.usersListColumns;
         }
       });
+  }
+
+  public setTableData(data) {
+    this.usersData = new MatTableDataSource(data);
+    this.usersData.paginator = this.paginator;
+    this.usersData.sort = this.sort;
   }
 
   public editUser(id: string): void {

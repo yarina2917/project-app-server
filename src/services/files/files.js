@@ -64,7 +64,7 @@ function deleteFile (id, path) {
 function changeAccess (data) {
   return new Promise((resolve, reject) => {
     File
-      .findOneAndUpdate({_id: data.id}, {users: data.users})
+      .findOneAndUpdate({ _id: data.id }, { users: data.users })
       .then(data => resolve(data))
       .catch(error => reject(createError(error)))
   })

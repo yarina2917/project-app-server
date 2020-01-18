@@ -1,10 +1,15 @@
 const express = require('express')
-const router = express.Router()
+const csv = require('csv-parser')
 
 const userService = require('../services/users/users')
+const userDataService = require('../services/users/users-data')
 const validator = require('../validators/validator')
 const { validate } = require('../services/error-handling/validate-middleware')
 const authentication = require('../services/passport/passport-middleware')
+
+const { HttpError } = require('../services/error-handling/http.errors')
+
+const router = express.Router()
 
 router.get('/get', authentication.apiKey, (req, res, next) => {
   userService.getUsers()
@@ -50,6 +55,31 @@ router.put('/update/:id', authentication.apiKey, validate(validator.updateUser),
 
 router.delete('/delete/:id', authentication.apiKey, (req, res, next) => {
   userService.deleteUser(req.params.id)
+    .then(data => res.status(200).send(data))
+    .catch(next)
+})
+
+router.get('/export', authentication.apiKey, (req, res, next) => {
+  userDataService.exportToCsv()
+    .then(data => res.status(200).send(data))
+    .catch(next)
+})
+
+router.post('/import', authentication.apiKey, (req, res, next) => {
+  const result = []
+  req
+    .pipe(csv())
+    .on('data', chunk => result.push(chunk))
+    .on('error', () => next(new HttpError('Error uploading file', 500)))
+    .on('end', () => {
+      userDataService.importFromCsv(result)
+        .then(data => res.status(200).send(data))
+        .catch(next)
+    })
+})
+
+router.get('/logger', authentication.apiKey, (req, res, next) => {
+  userDataService.getLogger()
     .then(data => res.status(200).send(data))
     .catch(next)
 })
