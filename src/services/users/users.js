@@ -46,7 +46,7 @@ function loginUser (userData) {
 function logoutUser (headers) {
   return new Promise((resolve, reject) => {
     User.findOneAndUpdate({ apiKey: headers['x-api-key'] }, { apiKey: uuid.v4() })
-      .then(data => resolve({ message: 'Success' }))
+      .then(() => resolve({ message: 'Success' }))
       .catch(error => reject(createError(error)))
   })
 }
@@ -71,16 +71,18 @@ function updateUser (id, userData) {
 function deleteUser (id) {
   return new Promise((resolve, reject) => {
     User.findOneAndRemove({ _id: id })
-      .then(data => resolve({ message: 'Success' }))
+      .then(() => resolve({ message: 'Success' }))
       .catch(error => reject(createError(error)))
   })
 }
 
-module.exports.getUsers = getUsers
-module.exports.getUser = getUser
-module.exports.getUserByToken = getUserByToken
-module.exports.createUser = createUser
-module.exports.loginUser = loginUser
-module.exports.logoutUser = logoutUser
-module.exports.updateUser = updateUser
-module.exports.deleteUser = deleteUser
+module.exports = {
+  getUsers,
+  getUser,
+  getUserByToken,
+  createUser,
+  loginUser,
+  logoutUser,
+  updateUser,
+  deleteUser
+}

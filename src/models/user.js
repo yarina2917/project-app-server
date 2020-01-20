@@ -5,6 +5,14 @@ const roles = ['ADMIN', 'USER']
 const adminRole = 'ADMIN'
 const userRole = 'USER'
 
+const userFileHeaders = [
+  { id: 'lastName', title: 'lastName' },
+  { id: 'firstName', title: 'firstName' },
+  { id: 'email', title: 'email' },
+  { id: 'password', title: 'password' },
+  { id: 'role', title: 'role' }
+]
+
 const userSchema = new mongoose.Schema({
   firstName: {
     type: String,
@@ -43,7 +51,10 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', userSchema)
 
-module.exports.User = User
-module.exports.roles = roles
-module.exports.adminRole = adminRole
-module.exports.userRole = userRole
+module.exports = {
+  User,
+  roles,
+  adminRole,
+  userRole,
+  userFileHeaders
+}

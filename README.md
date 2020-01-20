@@ -32,3 +32,12 @@
 ## Test standard
 
 - npm run standard
+
+## Create user
+
+- npm run create-user
+
+## Generate users to csv file
+
+- npm run generate-users
+

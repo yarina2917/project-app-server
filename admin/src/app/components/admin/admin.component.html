@@ -1,1 +1,18 @@
-<app-users-list [tableType]="'usersList'"></app-users-list>
+<div class="container">
+
+  <div class="users-actions">
+    <button type="submit" mat-raised-button color="primary" (click)="exportUsers()">Export users</button>
+    <div>
+      <input type="file" class="input-file"  [(ngModel)]="fileValue"
+             (change)="onFileChanged($event.target)" accept=".csv">
+      <button type="submit" mat-raised-button color="primary"
+              [disabled]="!file"
+              (click)="addUsers()">
+        Add users
+      </button>
+    </div>
+  </div>
+
+  <app-users-list [tableType]="'usersList'" [users]="users"></app-users-list>
+</div>
+

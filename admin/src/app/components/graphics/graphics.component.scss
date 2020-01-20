@@ -1,6 +1,10 @@
 .container {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   align-items: center;
-  margin-right: 75px;
+}
+
+.container > div {
+  margin: 0 50px 50px;
 }

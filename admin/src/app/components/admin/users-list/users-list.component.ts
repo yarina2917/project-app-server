@@ -1,15 +1,15 @@
 import { Component, OnInit, OnDestroy, ViewChild, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 import { UsersService } from '../../../services/users/users.service';
 import { RequestsService } from '../../../services/requests/requests.service';
 
 import { User } from '../../../models/user.interfaces';
 import { ModalInfoComponent } from '../../modal-info/modal-info.component';
-import { MatDialog } from '@angular/material';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { UserListModel } from './user-list.model';
 
@@ -25,10 +25,13 @@ export class UsersListComponent implements OnInit, OnDestroy {
 
   @Input() tableType: string;
   @Input() fileData: any;
+  @Input() set users(data: any) {
+    this.setTableData(data);
+  }
 
   public model: UserListModel;
   public usersData: MatTableDataSource<User>;
-  public selection = new SelectionModel<User>(true, []);
+  public selection;
   public requests$ = {
     getUser: null,
     deleteUser: null,
@@ -48,16 +51,21 @@ export class UsersListComponent implements OnInit, OnDestroy {
     this.model.userId = this.usersService.getUserData('id');
     this.requests$.getUser = this.api.get({url: '/users/get'})
       .subscribe((res: User[]) => {
-        this.usersData = new MatTableDataSource(res);
-        this.usersData.paginator = this.paginator;
-        this.usersData.sort = this.sort;
         if (this.tableType === 'mediaAccess') {
+          this.setTableData(res.filter(el => el.role === 'USER'));
           this.selection = new SelectionModel<User>(true, res.filter(el => this.fileData.users.includes(el._id)));
           this.model.displayedColumns = this.model.mediaAccessColumns;
         } else {
+          this.setTableData(res);
           this.model.displayedColumns = this.model.usersListColumns;
         }
       });
+  }
+
+  public setTableData(data) {
+    this.usersData = new MatTableDataSource(data);
+    this.usersData.paginator = this.paginator;
+    this.usersData.sort = this.sort;
   }
 
   public editUser(id: string): void {
