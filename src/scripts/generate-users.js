@@ -2,7 +2,7 @@ const path = require('path')
 
 const createCsvWriter = require('csv-writer').createObjectCsvWriter
 const { encrypt } = require('../services/utils/utils')
-const { adminRole, userRole, userFileHeaders } = require('../models/user')
+const { userRole, userFileHeaders } = require('../models/user')
 
 function generateUsers () {
   const users = []
@@ -12,7 +12,7 @@ function generateUsers () {
       lastName: `test ${i}`,
       email: `test${i}@test`,
       password: encrypt(`testpassword${i}`),
-      role: Math.random() < 0.5 ? adminRole : userRole
+      role: userRole
     })
   }
   const csvWriter = createCsvWriter({

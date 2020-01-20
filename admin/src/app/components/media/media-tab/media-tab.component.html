@@ -18,7 +18,10 @@
     <p class="media-title" *ngIf="type !== 'file'">{{item.title}}</p>
     <div class="media-icons">
       <i class="material-icons edit-icon" (click)="changeAccess(item._id)" *ngIf="usersService.adminAccess">edit</i>
-      <i class="material-icons delete-icon" (click)="deleteMedia(item)">delete</i>
+      <i class="material-icons delete-icon" (click)="deleteMedia(item)"
+         *ngIf="item.owner === model.userId || usersService.adminAccess">
+        delete
+      </i>
     </div>
   </li>
 </ul>

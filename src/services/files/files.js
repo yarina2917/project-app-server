@@ -4,8 +4,9 @@ const path = require('path')
 
 const File = require('../../models/files').File
 const { createError } = require('../error-handling/http.errors')
-const filePath = path.join(__dirname, '../../files/')
 const { adminRole } = require('../../models/user')
+
+const filePath = path.join(__dirname, '../../files/')
 
 function getFiles (type, user) {
   const search = user.role === adminRole ? { type: type } : { type: type, users: user._id }
@@ -37,6 +38,7 @@ function saveFile (fileData, params, id) {
         title: params.title,
         path: path,
         type: params.type,
+        owner: id,
         users: [id]
       })
       file
@@ -70,8 +72,10 @@ function changeAccess (data) {
   })
 }
 
-module.exports.getFiles = getFiles
-module.exports.getFile = getFile
-module.exports.saveFile = saveFile
-module.exports.deleteFile = deleteFile
-module.exports.changeAccess = changeAccess
+module.exports = {
+  getFiles,
+  getFile,
+  saveFile,
+  deleteFile,
+  changeAccess
+}

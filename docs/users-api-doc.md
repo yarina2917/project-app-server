@@ -108,10 +108,12 @@
    **Content:** 
    ```json
        {
+           "apiKey": "9ca188ff-1285-451c-ac98-9f00a136aae4",
            "_id": "5dfa660287c5ba2d97a86b84",
            "firstName": "Test",
            "lastName": "Test",
            "email": "test@gmail.com",
+           "password": "fdsa465f4das",
            "role": "ADMIN"
        }
    ```

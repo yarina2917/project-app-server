@@ -12,6 +12,7 @@
     "migrate-user-down": "migrate down 1578746764570-create-user.js",
     "test": "node_modules/mocha/bin/mocha ./src/tests/**/*.test.js",
     "test:dev": "nodemon --exec node_modules/mocha/bin/mocha ./src/tests/**/*.test.js",
+    "coverage": "nyc npm run test",
     "standard": "standard"
   },
   "author": "",
@@ -42,11 +43,15 @@
   "standard": {
     "ignore": [
       "/admin"
+    ],
+    "env": [
+      "mocha"
     ]
   },
   "devDependencies": {
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
-    "mocha": "^7.0.0"
+    "mocha": "^7.0.0",
+    "nyc": "^15.0.0"
   }
 }

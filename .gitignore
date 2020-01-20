@@ -1,3 +1,4 @@
 /node_modules
 /src/files/users.csv
 /src/files/users-logger.txt
+/.nyc_output

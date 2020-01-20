@@ -7,4 +7,5 @@ export class MediaModel {
   public title = '';
   public file = null;
   public data = [];
+  public userId = '';
 }

@@ -10,6 +10,11 @@ const fileSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
+  owner: {
+    type: String,
+    required: true,
+    unique: true
+  },
   users: {
     type: [String],
     required: true

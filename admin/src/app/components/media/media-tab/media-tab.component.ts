@@ -34,6 +34,7 @@ export class MediaTabComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
+    this.model.userId = this.usersService.getUserData('id');
     this.requests$.get = this.api.get({url: `/files/get?type=${this.type}`})
       .subscribe(res => this.model.data = res.reverse());
   }

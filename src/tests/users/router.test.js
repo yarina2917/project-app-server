@@ -5,8 +5,8 @@ const { User } = require('../../models/user')
 const mockUsers = require('../fixtures/users')
 
 const server = require('../../app')
-const should = chai.should()
 
+chai.should()
 chai.use(chaiHttp)
 
 describe('Users', () => {
@@ -46,6 +46,9 @@ describe('Users', () => {
       .post('/users/create')
       .send(mockUsers.users[1])
       .end((err, res) => {
+        if (err) {
+          throw err
+        }
         res.should.have.status(400)
         res.body.message.should.include('Email is already used')
         done()
@@ -56,6 +59,9 @@ describe('Users', () => {
     chai.request(server)
       .get('/users/get')
       .end((err, res) => {
+        if (err) {
+          throw err
+        }
         res.should.have.status(401)
         done()
       })
@@ -66,6 +72,9 @@ describe('Users', () => {
       .get(`/users/get-one/${id}`)
       .set('x-api-key', apiKey)
       .end((err, res) => {
+        if (err) {
+          throw err
+        }
         res.should.have.status(200)
         res.body.should.be.a('object')
         res.body.firstName.should.be.eq(mockUsers.users[0].firstName)
@@ -81,6 +90,9 @@ describe('Users', () => {
       .get('/users/get')
       .set('x-api-key', apiKey)
       .end((err, res) => {
+        if (err) {
+          throw err
+        }
         res.should.have.status(200)
         res.body.should.be.a('array')
         res.body.length.should.be.greaterThan(2)
@@ -98,6 +110,9 @@ describe('Users', () => {
       .send(params)
       .set('x-api-key', apiKey)
       .end((err, res) => {
+        if (err) {
+          throw err
+        }
         res.should.have.status(200)
         res.body.firstName.should.be.eq(params.firstName)
         res.body.lastName.should.be.eq(params.lastName)
@@ -107,11 +122,50 @@ describe('Users', () => {
       })
   })
 
+  it('it should return 200 and change apiKey while login user with valid data', done => {
+    const params = {
+      email: mockUsers.users[0].email,
+      password: mockUsers.users[0].password
+    }
+    chai.request(server)
+      .post('/users/login')
+      .send(params)
+      .end((err, res) => {
+        if (err) {
+          throw err
+        }
+        res.body.apiKey.should.to.not.equal(apiKey)
+        res.should.have.status(200)
+        apiKey = res.body.apiKey
+        done()
+      })
+  })
+
+  it('it should return 401 while login user with invalid data', done => {
+    const params = {
+      email: mockUsers.users[0].email,
+      password: 'testtest'
+    }
+    chai.request(server)
+      .post('/users/login')
+      .send(params)
+      .end((err, res) => {
+        if (err) {
+          throw err
+        }
+        res.should.have.status(401)
+        done()
+      })
+  })
+
   it('it should return 200 while deleting user', done => {
     chai.request(server)
       .delete(`/users/delete/${id}`)
       .set('x-api-key', apiKey)
       .end((err, res) => {
+        if (err) {
+          throw err
+        }
         res.should.have.status(200)
         res.body.message.should.include('Success')
         done()
