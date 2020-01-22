@@ -86,6 +86,8 @@ function getLogger () {
   })
 }
 
-module.exports.exportToCsv = exportToCsv
-module.exports.importFromCsv = importFromCsv
-module.exports.getLogger = getLogger
+module.exports = {
+  exportToCsv,
+  importFromCsv,
+  getLogger
+}

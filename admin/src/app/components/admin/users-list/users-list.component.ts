@@ -102,7 +102,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
     this.requests$.access = this.api.post({
       url: '/files/change-access', body: {id: this.fileData._id, users: this.selection.selected}
     })
-      .subscribe(() => this.openDialog('Access to file was updated'))
+      .subscribe(() => this.openDialog('Access to file was updated'));
   }
 
   public openDialog(message: string): void {

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { RequestsService } from "../../services/requests/requests.service";
-import { MatDialog } from "@angular/material";
-import {ModalInfoComponent} from "../modal-info/modal-info.component";
+import { RequestsService } from '../../services/requests/requests.service';
+import { MatDialog } from '@angular/material';
+import { ModalInfoComponent } from '../modal-info/modal-info.component';
 
 @Component({
   selector: 'app-admin',
@@ -30,7 +30,7 @@ export class AdminComponent implements OnInit {
       .subscribe(
         () => this.openDialog('Success export'),
         err => this.openDialog(err.message)
-      )
+      );
   }
 
   public addUsers(): void {
@@ -51,7 +51,7 @@ export class AdminComponent implements OnInit {
 
   public getUsers(): void {
     this.api.get({url: '/users/get'})
-      .subscribe(res => this.users = res)
+      .subscribe(res => this.users = res);
   }
 
   public openDialog(message: string): void {

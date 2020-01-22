@@ -3,7 +3,7 @@ const csv = require('csv-parser')
 
 const userService = require('../services/users/users')
 const userDataService = require('../services/users/users-data')
-const validator = require('../validators/validator')
+const validator = require('../validators/user/validator-user')
 const { validate } = require('../services/error-handling/validate-middleware')
 const authentication = require('../services/passport/passport-middleware')
 
