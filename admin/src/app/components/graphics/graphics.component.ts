@@ -101,7 +101,7 @@ export class GraphicsComponent implements OnInit, OnDestroy {
       data.labels.push(new Date(el.date).toLocaleString());
       data.values.push(el.countAll);
     });
-    return data
+    return data;
   }
 
   public getData2(loggerData) {
@@ -111,7 +111,7 @@ export class GraphicsComponent implements OnInit, OnDestroy {
         success: el.countSuccess,
         errors: el.errors.length
       }
-    ))
+    ));
   }
 
   public ngOnDestroy(): void {

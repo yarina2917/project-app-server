@@ -9,7 +9,7 @@ import { AuthenticationGuard } from './guards/authentication-guard';
 import { GraphicsComponent } from './components/graphics/graphics.component';
 import { HomeComponent } from './components/home/home.component';
 import { MediaComponent } from './components/media/media.component';
-import {MediaAccessComponent} from "./components/media/media-access/media-access.component";
+import { MediaAccessComponent } from './components/media/media-access/media-access.component';
 
 const routes: Routes = [
   {path: 'registration', component: RegistrationComponent},
