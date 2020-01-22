@@ -62,7 +62,7 @@ describe('Files', () => {
         }
         res.should.have.status(200)
         res.body.should.be.a('array')
-        res.body.length.should.be.greaterThan(1)
+        res.body.length.should.be.greaterThan(0)
         res.body.forEach(el => el.type.should.be.eq('image'))
         done()
       })
