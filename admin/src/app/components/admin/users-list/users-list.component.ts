@@ -52,8 +52,9 @@ export class UsersListComponent implements OnInit, OnDestroy {
     this.requests$.getUser = this.api.get({url: '/users/get'})
       .subscribe((res: User[]) => {
         if (this.tableType === 'mediaAccess') {
-          this.setTableData(res.filter(el => el.role === 'USER'));
-          this.selection = new SelectionModel<User>(true, res.filter(el => this.fileData.users.includes(el._id)));
+          const filteredUsers = res.filter(el => el.role === 'USER');
+          this.setTableData(filteredUsers);
+          this.selection = new SelectionModel<User>(true, filteredUsers.filter(el => this.fileData.users.includes(el._id)));
           this.model.displayedColumns = this.model.mediaAccessColumns;
         } else {
           this.setTableData(res);
