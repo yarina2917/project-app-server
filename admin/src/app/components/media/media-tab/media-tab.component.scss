@@ -26,7 +26,7 @@
       width: 300px;
       height: auto;
     }
-    audio {
+    audio, video {
       outline: none;
     }
     .media-icons {
@@ -41,11 +41,6 @@
         background-color: white;
         border: 1px solid black;
       }
-    }
-    a {
-      color: black;
-      font-size: 23px;
-      border-bottom: 1px solid gray;
     }
   }
 }

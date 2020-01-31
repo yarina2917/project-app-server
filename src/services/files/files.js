@@ -66,7 +66,9 @@ function saveFile (fileData, params, id) {
         worker.on('error', (err) => reject(createError(err)))
 
         worker.on('exit', (code) => {
-          if (code) { console.error(`Worker stopped with exit code ${code}`) }
+          if (code) {
+            console.error(`Worker stopped with exit code ${code}`)
+          }
         })
       } else {
         file
