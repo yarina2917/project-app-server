@@ -20,7 +20,7 @@ const fileSchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    enum: ['image', 'audio', 'file'],
+    enum: ['image', 'audio', 'video'],
     required: true
   }
 }, {

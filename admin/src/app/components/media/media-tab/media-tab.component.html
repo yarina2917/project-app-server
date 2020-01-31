@@ -1,11 +1,11 @@
 <div class="media-upload">
   <input type="file" class="input-file" (change)="onFileChanged($event.target)"
-         [(ngModel)]="model.fileInput" [accept]="type === 'file' ? model.filesExt : type + '/*'">
+         [(ngModel)]="model.fileInput" [accept]="type + '/*'">
   <input type="text" class="input-title" placeholder="File title" [(ngModel)]="model.title">
-  <button mat-raised-button color="primary" (click)="onUpload()" [disabled]="!model.title || !model.file">Upload!</button>
+  <button mat-raised-button color="primary" (click)="onUpload()" [disabled]="!model.title || !model.file || model.loading">{{model.loading ? 'Loading...' : 'Upload!'}}</button>
 </div>
 
-<ul class="media-list" [ngClass]="{'files-list': type === 'file'}">
+<ul class="media-list">
   <li *ngFor="let item of model.data">
 
     <img [src]="model.fileUrl + item.path" alt="media" *ngIf="type === 'image'">
@@ -13,9 +13,12 @@
       <source [src]="model.fileUrl + item.path">
       Your browser does not support the audio element.
     </audio>
-    <a [href]="model.fileUrl + item.path" target="_blank" class="media-title" *ngIf="type === 'file'">{{item.title}}</a>
+    <video width="320" height="240" controls *ngIf="type === 'video'">
+      <source [src]="model.fileUrl + item.path" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
 
-    <p class="media-title" *ngIf="type !== 'file'">{{item.title}}</p>
+    <p class="media-title">{{item.title}}</p>
     <div class="media-icons">
       <i class="material-icons edit-icon" (click)="changeAccess(item._id)" *ngIf="usersService.adminAccess">edit</i>
       <i class="material-icons delete-icon" (click)="deleteMedia(item)"

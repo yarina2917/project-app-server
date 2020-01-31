@@ -41,7 +41,7 @@ export class MediaTabComponent implements OnInit, OnDestroy {
 
   public onFileChanged(event): void {
     if (event.files[0]) {
-      if (event.files[0].size > 10485760) {
+      if (this.type !== 'video' && event.files[0].size > 10485760) {
         this.openDialog('File size larger than 10 MB');
         this.model.fileInput = '';
       } else {
@@ -52,15 +52,20 @@ export class MediaTabComponent implements OnInit, OnDestroy {
 
   public onUpload(): void {
     const extname = this.model.file.name.split('.').pop();
+    this.model.loading = true;
     this.requests$.post = this.api.post({
       url: `/files/upload?type=${this.type}&title=${this.model.title}&extname=${extname}`,
       body: this.model.file
     })
-      .subscribe((res) => {
-        this.model.title = '';
-        this.model.fileInput = '';
-        this.model.data.unshift(res);
-      });
+      .subscribe(
+        res => {
+          this.model.title = '';
+          this.model.fileInput = '';
+          this.model.loading = false;
+          this.model.data.unshift(res);
+        },
+        () => this.model.loading = false
+      );
   }
 
   public deleteMedia(item): void {

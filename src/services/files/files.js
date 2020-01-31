@@ -1,12 +1,14 @@
 const fs = require('fs')
 const uuid = require('uuid')
 const path = require('path')
+const { Worker, isMainThread } = require('worker_threads')
 
 const File = require('../../models/files').File
 const { createError } = require('../error-handling/http.errors')
 const { adminRole } = require('../../models/user')
 
 const filePath = path.join(__dirname, '../../files/')
+const workerPath = path.join(__dirname, '../../scripts/video-worker.js')
 
 function getFiles (type, user) {
   const search = user.role === adminRole ? { type: type } : { type: type, users: user._id }
@@ -41,10 +43,37 @@ function saveFile (fileData, params, id) {
         owner: id,
         users: [id]
       })
-      file
-        .save()
-        .then(data => resolve(data))
-        .catch(error => reject(createError(error)))
+      if (params.type === 'video' && isMainThread) {
+        const worker = new Worker(workerPath, { workerData: path })
+
+        worker.on('message', (result) => {
+          if (result.status === 'Done') {
+            file.path = result.fileName
+            file
+              .save()
+              .then(data => {
+                fs.unlink(filePath + path, (err) => {
+                  if (err) {
+                    console.error('Error delete file', err)
+                  }
+                  resolve(data)
+                })
+              })
+              .catch(error => reject(createError(error)))
+          }
+        })
+
+        worker.on('error', (err) => reject(createError(err)))
+
+        worker.on('exit', (code) => {
+          if (code) { console.error(`Worker stopped with exit code ${code}`) }
+        })
+      } else {
+        file
+          .save()
+          .then(data => resolve(data))
+          .catch(error => reject(createError(error)))
+      }
     })
   })
 }
